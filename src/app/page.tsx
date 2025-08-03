@@ -1,9 +1,12 @@
 import React from "react";
+import Notice from "./components/Notice";
+import Banner from "./components/Banner";
 
 const HomePage = () => {
   return (
-    <div>
-      আরও হেল্প লাগলে বলেন—আমি আপনার নিজের ফন্ট কাস্টম আপলোড করাও করে দিতে পারি।
+    <div className="min-h-screen">
+      <Notice />
+      <Banner />
     </div>
   );
 };

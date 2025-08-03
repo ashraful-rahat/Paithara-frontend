@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
 
 const MENU_ITEMS = [
   { label: "হোম", href: "/" },
@@ -12,107 +14,180 @@ const MENU_ITEMS = [
 ];
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <nav className="w-full fixed top-0 z-50 bg-gray-100/90 backdrop-blur-md border-b border-gray-300 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        {/* Bismillah */}
-        <div className="text-center text-green-700 text-xl font-semibold tracking-wide mb-4">
+    <nav className="w-full bg-gradient-to-r from-white to-gray-50 shadow-lg border-b-4 border-green-600">
+      {/* Bismillah at the very top */}
+      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-2">
+        <p className="text-lg font-bold tracking-wider">
           বিসমিল্লাহির রাহমানির রাহিম
+        </p>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Bar - Contact Info */}
+        <div className="hidden md:flex items-center justify-end py-3 text-sm text-gray-700 space-x-6">
+          <div className="flex items-center gap-2 bg-white/80 px-3 py-1 rounded-full shadow-sm">
+            <Mail size={18} className="text-green-600" />
+            <a
+              href="mailto:info@paithara.edu.bd"
+              className="hover:text-green-600 transition-colors font-medium"
+            >
+              info@paithara.edu.bd
+            </a>
+          </div>
+          <div className="flex items-center gap-2 bg-white/80 px-3 py-1 rounded-full shadow-sm">
+            <Phone size={18} className="text-green-600" />
+            <a
+              href="tel:01300-000000"
+              className="hover:text-green-600 transition-colors font-medium"
+            >
+              01300-000000
+            </a>
+          </div>
+          <div className="flex items-center gap-2 bg-white/80 px-3 py-1 rounded-full shadow-sm">
+            <MapPin size={18} className="text-green-600" />
+            <span className="font-medium">পৈথারা, ঢাকা</span>
+          </div>
         </div>
 
-        {/* Logo + Info Row */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 text-center md:text-left">
-          {/* Left: Logo */}
-          <div className="flex items-center justify-center md:justify-start gap-4">
-            <Image
-              src="/images/logo1.png"
-              alt="লোগো"
-              width={90}
-              height={90}
-              className="rounded-full object-cover"
-            />
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-                পৈথারা উচ্চ বিদ্যালয়
+        {/* Main Navbar */}
+        <div className="flex items-center justify-between py-4">
+          {/* Logo and School Name */}
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Image
+                src="/images/logo1.png"
+                alt="পৈথারা উচ্চ বিদ্যালয় লোগো"
+                width={70}
+                height={70}
+                className="rounded-full object-cover border-4 border-green-600 shadow-lg"
+              />
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs font-bold">✓</span>
+              </div>
+            </div>
+            <div className="hidden sm:block">
+              <h1 className="text-2xl font-bold text-gray-900 leading-tight">
+                পৈথারা উচ্চ বিদ্যালয়
               </h1>
-              <p className="text-xl text-gray-900 font-medium">স্থাপিত: ১৯৮৫</p>
+              <p className="text-base text-gray-600 font-medium">স্থাপিত: ১৯৮৫</p>
+              <p className="text-sm text-green-600 font-semibold">উচ্চ মাধ্যমিক শিক্ষা প্রতিষ্ঠান</p>
             </div>
           </div>
 
-          {/* Right: Contact */}
-          <div className="text-lg text-gray-700 flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-green-600 text-xl">📧</span>
-              <a
-                href="mailto:info@paithara.edu.bd"
-                className="text-blue-600 hover:text-blue-800 transition-colors"
-              >
-                info@paithara.edu.bd
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-green-600 text-xl">📞</span>
-              <a
-                href="tel:01300-000000"
-                className="text-blue-600 hover:text-blue-800 transition-colors"
-              >
-                01300-000000
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="border-t border-gray-200 my-4" />
-
-        {/* Navigation */}
-        <div className="flex items-center justify-center h-16">
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-10 text-lg lg:text-xl font-medium text-gray-800">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-8">
             {MENU_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="hover:text-green-600 hover:underline transition-all duration-200"
+                className="text-gray-800 hover:text-green-600 font-semibold text-lg transition-all duration-300 relative group px-4 py-2 rounded-lg hover:bg-green-50"
               >
                 {item.label}
+                <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-green-600 transition-all duration-300 group-hover:w-3/4"></span>
               </Link>
             ))}
           </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden relative">
+          {/* Tablet Navigation - Compact */}
+          <div className="hidden md:flex lg:hidden items-center space-x-4">
+            {MENU_ITEMS.slice(0, 3).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-gray-800 hover:text-green-600 font-semibold text-base transition-all duration-300 px-3 py-2 rounded-lg hover:bg-green-50"
+              >
+                {item.label}
+              </Link>
+            ))}
             <button
-              className="flex flex-col items-end justify-center w-12 h-12 space-y-2"
-              onClick={() => {
-                const menu = document.getElementById("mobile-menu");
-                if (menu) {
-                  menu.classList.toggle("hidden");
-                }
-              }}
+              onClick={toggleMobileMenu}
+              className="p-2 rounded-lg text-gray-800 hover:text-green-600 hover:bg-green-50 transition-all duration-300"
             >
-              <span className="w-10 h-1 bg-gray-800 rounded-full transition-all"></span>
-              <span className="w-8 h-1 bg-gray-800 rounded-full transition-all"></span>
-              <span className="w-6 h-1 bg-gray-800 rounded-full transition-all"></span>
+              <Menu size={24} />
             </button>
+          </div>
 
-            {/* Mobile Dropdown */}
-            <div
-              id="mobile-menu"
-              className="absolute top-16 right-4 w-48 bg-white/90 backdrop-blur-md rounded-md shadow-lg py-2 z-50 hidden"
-            >
+          {/* Mobile Menu Button */}
+          <button
+            onClick={toggleMobileMenu}
+            className="md:hidden p-3 rounded-lg text-gray-800 hover:text-green-600 hover:bg-green-50 transition-all duration-300"
+          >
+            {isMobileMenuOpen ? (
+              <X size={28} />
+            ) : (
+              <Menu size={28} />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t-2 border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
+            <div className="py-3 space-y-1">
               {MENU_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="block px-4 py-3 text-lg text-gray-800 hover:bg-gray-100 hover:text-green-600 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-gray-800 hover:text-green-600 hover:bg-green-50 font-semibold text-lg transition-all duration-300 mx-2 rounded-lg"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              
+              {/* Mobile Contact Info */}
+              <div className="border-t-2 border-green-200 mt-4 pt-4 px-4 space-y-3">
+                <div className="flex items-center gap-3 text-base text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
+                  <Mail size={20} className="text-green-600" />
+                  <a
+                    href="mailto:info@paithara.edu.bd"
+                    className="hover:text-green-600 transition-colors font-medium"
+                  >
+                    info@paithara.edu.bd
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 text-base text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
+                  <Phone size={20} className="text-green-600" />
+                  <a
+                    href="tel:01300-000000"
+                    className="hover:text-green-600 transition-colors font-medium"
+                  >
+                    01300-000000
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 text-base text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
+                  <MapPin size={20} className="text-green-600" />
+                  <span className="font-medium">পৈথারা, ঢাকা</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tablet Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="hidden md:block lg:hidden border-t-2 border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
+            <div className="py-3 space-y-1">
+              {MENU_ITEMS.slice(3).map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-gray-800 hover:text-green-600 hover:bg-green-50 font-semibold text-lg transition-all duration-300 mx-2 rounded-lg"
                 >
                   {item.label}
                 </Link>
               ))}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );
