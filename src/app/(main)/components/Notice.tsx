@@ -1,45 +1,58 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Megaphone, ArrowRight, Bell } from "lucide-react";
+import { Bell, ArrowRight } from "lucide-react";
+import axiosInstance from "@/utils/axios";
+import { toast } from "react-toastify"; // if you want toast notifications
 
-// এখানে নোটিশের ডেটা থাকবে (স্ট্যাটিক উদাহরণ)
-const notices = [
-  {
-    id: 1,
-    title: "২০২৫-২০২৬ শিক্ষাবর্ষের ভর্তি শুরু হয়েছে!",
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "বার্ষিক ক্রীড়া প্রতিযোগিতা ১০ আগস্ট, ২০২৫ তারিখে অনুষ্ঠিত হবে।",
-    link: "#",
-  },
-  {
-    id: 3,
-    title: "গ্রীষ্মকালীন ছুটি ৫ আগস্ট, ২০২৫ পর্যন্ত বাড়ানো হয়েছে।",
-    link: "#",
-  },
-  {
-    id: 4,
-    title: "বিজ্ঞান মেলায় অংশগ্রহণের শেষ তারিখ: ৩০ জুলাই, ২০২৫।",
-    link: "#",
-  },
-  {
-    id: 5,
-    title: "অভিভাবক-শিক্ষক সভা ২৮ জুলাই, ২০২৫ তারিখে অনুষ্ঠিত হবে।",
-    link: "#",
-  },
-  {
-    id: 6,
-    title: "১ আগস্ট, ২০২৫ থেকে নতুন লাইব্রেরি সময় কার্যকর হবে।",
-    link: "#",
-  },
-];
+interface NoticeItem {
+  id: string;
+  title: string;
+  link?: string;
+}
 
 const Notice: React.FC = () => {
+  const [notices, setNotices] = useState<NoticeItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const response = await axiosInstance.get("/notices");
+        setNotices(response.data.data || []); // adapt based on your API response structure
+      } catch (error) {
+        toast.error("নোটিশ লোড করতে সমস্যা হয়েছে");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
+  // Duplicate the notices for smooth marquee scroll effect
   const duplicatedNotices = [...notices, ...notices, ...notices];
+
+  if (loading) {
+    return (
+      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg">
+        <div className="container mx-auto px-4 py-3 text-center">
+          লোড হচ্ছে...
+        </div>
+      </section>
+    );
+  }
+
+  if (notices.length === 0) {
+    return (
+      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg">
+        <div className="container mx-auto px-4 py-3 text-center">
+          কোনো নোটিশ পাওয়া যায়নি।
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg">
@@ -57,9 +70,7 @@ const Notice: React.FC = () => {
               <Bell className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold leading-tight">
-                নোটিশ বোর্ড
-              </h2>
+              <h2 className="text-lg font-bold leading-tight">নোটিশ বোর্ড</h2>
               <p className="text-xs text-red-100">সর্বশেষ আপডেট</p>
             </div>
           </motion.div>
@@ -81,7 +92,7 @@ const Notice: React.FC = () => {
               >
                 {duplicatedNotices.map((notice, index) => (
                   <a
-                    href={notice.link}
+                    href={notice.link || "#"}
                     key={`${notice.id}-${index}`}
                     target="_blank"
                     rel="noopener noreferrer"

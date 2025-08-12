@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Select from "react-select";
+import axiosInstance from "@/utils/axios";
 
 interface StaffFormData {
   name: string;
@@ -178,25 +179,20 @@ const StaffAddPage = () => {
       formData.append("photo", photo);
       formData.append("subjectPreferences", JSON.stringify(subjectPreferences));
 
-      const response = await fetch(
-        "http://localhost:5000/api/v1/staff/create",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await axiosInstance.post("/staff/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      if (response.ok) {
+      if (response.status === 201) {
         toast.success("কর্মকর্তা সফলভাবে যোগ হয়েছে");
         reset();
         setPhoto(null);
         setPhotoPreview("");
-        setSubjectPreferences([]);
-      } else {
-        const error = await response.json();
-        toast.error(error.message || "কিছু ভুল হয়েছে");
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "কিছু ভুল হয়েছে");
     } finally {
       setLoading(false);
     }

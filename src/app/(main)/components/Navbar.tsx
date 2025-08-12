@@ -9,7 +9,7 @@ const MENU_ITEMS = [
   { label: "আমাদের সম্পর্কে", href: "/about" },
   { label: "সকল শিক্ষার্থী", href: "/students" },
   { label: "শিক্ষক তালিকা", href: "/teachers" },
-  { label: "ব্লগ", href: "/blog" },
+  { label: "ইভেন্টস", href: "/events" },
   { label: "যোগাযোগ", href: "/contact" },
 ];
 
@@ -80,7 +80,7 @@ export default function Navbar() {
                 স্থাপিত: ১৯৮৫
               </p>
               <p className="text-sm text-green-600 font-semibold">
-                উচ্চ মাধ্যমিক শিক্ষা প্রতিষ্ঠান
+                মাধ্যমিক শিক্ষা প্রতিষ্ঠান
               </p>
             </div>
           </div>
