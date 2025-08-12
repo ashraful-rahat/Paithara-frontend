@@ -7,13 +7,7 @@ import Image from "next/image";
 
 interface CarouselSlide {
   id: number;
-  title: string;
-  subtitle: string;
-  description: string;
   image: string;
-  ctaText: string;
-  ctaLink: string;
-  bgColor: string;
 }
 
 interface BannerProps {
@@ -24,39 +18,9 @@ interface BannerProps {
 }
 
 const defaultSlides: CarouselSlide[] = [
-  {
-    id: 1,
-    title: "পৈথারা  উচ্চ বিদ্যালয় স্বাগতম",
-    subtitle: "জ্ঞানের আলোয় আলোকিত হোন",
-    description:
-      "আমাদের আধুনিক শিক্ষা ব্যবস্থা এবং অভিজ্ঞ শিক্ষকমণ্ডলীর মাধ্যমে আপনার সন্তানের ভবিষ্যৎ গড়ে তুলুন।",
-    image: "/images/banner3.jpg",
-    ctaText: "ভর্তি করুন",
-    ctaLink: "#",
-    bgColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  },
-  {
-    id: 2,
-    title: "শিক্ষার মান উন্নয়ন",
-    subtitle: "ভবিষ্যতের জন্য প্রস্তুত",
-    description:
-      "আধুনিক প্রযুক্তি এবং উদ্ভাবনী শিক্ষা পদ্ধতির মাধ্যমে শিক্ষার্থীদের সর্বোচ্চ সম্ভাবনা বিকাশে সহায়তা করি।",
-    image: "/images/banner2.jpg",
-    ctaText: "আরও জানুন",
-    ctaLink: "#",
-    bgColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-  },
-  {
-    id: 3,
-    title: "সাফল্যের পথে অগ্রযাত্রা",
-    subtitle: "উৎকর্ষতার প্রতিশ্রুতি",
-    description:
-      "প্রতিটি শিক্ষার্থীর ব্যক্তিগত বিকাশ এবং একাডেমিক সাফল্য নিশ্চিত করার জন্য আমরা প্রতিশ্রুতিবদ্ধ।",
-    image: "/images/banner.jpg",
-    ctaText: "অন্বেষণ করুন",
-    ctaLink: "#",
-    bgColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-  },
+  { id: 1, image: "/images/bannnnnnnner.jpg" },
+  { id: 2, image: "/images/banner2.jpg" },
+  { id: 3, image: "/images/banner.jpg" },
 ];
 
 const Banner: React.FC<BannerProps> = ({
@@ -125,7 +89,7 @@ const Banner: React.FC<BannerProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
+    <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-lg">
       {/* Carousel Container */}
       <div className="relative w-full h-full">
         <AnimatePresence initial={false} custom={currentSlide}>
@@ -154,75 +118,22 @@ const Banner: React.FC<BannerProps> = ({
             }}
             className="absolute w-full h-full"
             style={{
-              background: slides[currentSlide].bgColor,
+              backgroundColor: "transparent",
             }}
           >
-            {/* Background Image with Next.js Image */}
-            <div className="absolute inset-0">
-              <Image
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                fill
-                className="object-cover opacity-20"
-                priority={currentSlide === 0}
-                sizes="100vw"
-                onError={(e) => {
-                  // Fallback to gradient background if image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = "none";
-                }}
-              />
-            </div>
-
-            {/* Background Pattern Overlay */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
-            </div>
-
-            {/* Slide Content */}
-            <div className="relative flex items-center justify-center h-full px-4 md:px-8">
-              <div className="text-center text-white max-w-4xl">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="text-3xl md:text-5xl lg:text-7xl font-bold mb-4 drop-shadow-lg leading-tight"
-                >
-                  {slides[currentSlide].title}
-                </motion.h1>
-
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-white/90 leading-tight"
-                >
-                  {slides[currentSlide].subtitle}
-                </motion.h2>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  className="text-base md:text-lg lg:text-xl mb-8 text-white/80 leading-relaxed max-w-3xl mx-auto"
-                >
-                  {slides[currentSlide].description}
-                </motion.p>
-
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-white text-gray-800 px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-gray-50"
-                >
-                  {slides[currentSlide].ctaText}
-                </motion.button>
-              </div>
-            </div>
+            {/* Just show the image */}
+            <Image
+              src={slides[currentSlide].image}
+              alt={`Slide ${currentSlide + 1}`}
+              fill
+              className="object-cover"
+              priority={currentSlide === 0}
+              sizes="100vw"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = "none";
+              }}
+            />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -230,32 +141,32 @@ const Banner: React.FC<BannerProps> = ({
       {/* Navigation Controls */}
       {showControls && (
         <>
-          {/* Previous Button */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={prevSlide}
-            className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm p-2 md:p-3 rounded-full text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-black/30 p-2 md:p-3 rounded-full text-white hover:bg-black/50 transition-all duration-300 z-10"
+            aria-label="Previous Slide"
           >
             <ChevronLeft size={20} className="md:w-6 md:h-6" />
           </motion.button>
 
-          {/* Next Button */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={nextSlide}
-            className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm p-2 md:p-3 rounded-full text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-black/30 p-2 md:p-3 rounded-full text-white hover:bg-black/50 transition-all duration-300 z-10"
+            aria-label="Next Slide"
           >
             <ChevronRight size={20} className="md:w-6 md:h-6" />
           </motion.button>
 
-          {/* Auto-play Toggle */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={toggleAutoPlay}
-            className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2 md:p-3 rounded-full text-white hover:bg-white/30 transition-all duration-300 z-10"
+            className="absolute top-4 right-4 bg-black/30 p-2 md:p-3 rounded-full text-white hover:bg-black/50 transition-all duration-300 z-10"
+            aria-label={isAutoPlaying ? "Pause autoplay" : "Play autoplay"}
           >
             {isAutoPlaying ? (
               <Pause size={16} className="md:w-5 md:h-5" />
@@ -280,13 +191,14 @@ const Banner: React.FC<BannerProps> = ({
                   ? "bg-white scale-125"
                   : "bg-white/50 hover:bg-white/70"
               }`}
+              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
       )}
 
       {/* Slide Counter */}
-      <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-sm px-2 md:px-3 py-1 rounded-full text-white text-xs md:text-sm font-medium z-10">
+      <div className="absolute top-4 left-4 bg-black/30 px-2 md:px-3 py-1 rounded-full text-white text-xs md:text-sm font-medium z-10 select-none">
         {currentSlide + 1} / {slides.length}
       </div>
     </div>

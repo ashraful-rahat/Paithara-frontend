@@ -84,7 +84,7 @@ const StudentPage = () => {
         >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <div className="flex items-center space-x-4">
-              <Link href="/Dashboard">
+              <Link href="/">
                 <div className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
                   <ArrowLeft className="w-6 h-6 text-gray-600" />
                 </div>
