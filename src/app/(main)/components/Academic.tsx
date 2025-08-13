@@ -198,7 +198,7 @@ const AcademicPrograms = () => {
 
                 {/* Career Path */}
                 <div className="pt-4 border-t border-gray-200">
-                  <p className="text-sm font-semibold text-accent mb-1">
+                  <p className="text-sm font-semibold text-gray-900 mb-1">
                     ক্যারিয়ার সুযোগ:
                   </p>
                   <p className="text-sm text-gray-700">{stream.career}</p>
