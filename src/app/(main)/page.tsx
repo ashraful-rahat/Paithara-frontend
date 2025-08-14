@@ -4,6 +4,7 @@ import Banner from "./components/Banner";
 import Academic from "./components/Academic";
 import StudentActivities from "./components/StudentActivities";
 import SirSpeech from "./components/SirSpeech";
+import ClassroomPage from "./components/Classroom";
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
       <Banner />
       <SirSpeech></SirSpeech>
       <Academic />
+      <ClassroomPage />
       <StudentActivities />
     </div>
   );

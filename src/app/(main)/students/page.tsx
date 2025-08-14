@@ -11,6 +11,17 @@ import {
   User,
   Phone,
   BookOpen,
+  Users,
+  Calendar,
+  MapPin,
+  Star,
+  Trophy,
+  Award,
+  Heart,
+  Eye,
+  Sparkles,
+  TrendingUp,
+  BookOpenCheck
 } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/utils/axios";
@@ -65,59 +76,141 @@ const StudentPage = () => {
     return matchesSearch && matchesClass;
   });
 
+  const getClassColor = (cls: string) => {
+    const colors: { [key: string]: string } = {
+      "৬ষ্ঠ": "from-blue-500 to-blue-600",
+      "৭ম": "from-green-500 to-green-600",
+      "৮ম": "from-purple-500 to-purple-600",
+      "৯ম": "from-orange-500 to-orange-600",
+      "১০ম": "from-red-500 to-red-600",
+    };
+    return colors[cls] || "from-gray-500 to-gray-600";
+  };
+
+  const getClassIcon = (cls: string) => {
+    const icons: { [key: string]: React.ReactNode } = {
+      "৬ষ্ঠ": <BookOpen className="w-4 h-4" />,
+      "৭ম": <BookOpenCheck className="w-4 h-4" />,
+      "৮ম": <GraduationCap className="w-4 h-4" />,
+      "৯ম": <Trophy className="w-4 h-4" />,
+      "১০ম": <Award className="w-4 h-4" />,
+    };
+    return icons[cls] || <BookOpen className="w-4 h-4" />;
+  };
+
+  const getGenderColor = (gender: string) => {
+    return gender === "পুরুষ" ? "from-blue-500 to-blue-600" : "from-pink-500 to-pink-600";
+  };
+
+  const getGenderIcon = (gender: string) => {
+    return gender === "পুরুষ" ? <User className="w-4 h-4" /> : <User className="w-4 h-4" />;
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto mb-6"></div>
+          <p className="text-xl text-gray-600">ছাত্র-ছাত্রী তথ্য লোড হচ্ছে...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Hero Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 py-20"
+      >
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:20px_20px] opacity-20" />
+        
+        <div className="relative max-w-7xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="inline-block p-3 bg-white/20 backdrop-blur-sm rounded-full mb-6"
+          >
+            <GraduationCap className="w-10 h-10 text-white" />
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-4xl md:text-6xl font-bold text-white mb-6"
+          >
+            আমাদের ছাত্র-ছাত্রী
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
+          >
+            ভবিষ্যতের নেতৃত্বদানকারী এবং দেশের সম্পদ হিসেবে গড়ে উঠছে আমাদের ছাত্র-ছাত্রীরা
+          </motion.p>
+        </div>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Header and Filter */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 mb-12"
         >
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+            <div className="flex items-center space-x-4 mb-6 md:mb-0">
               <Link href="/">
-                <div className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
-                  <ArrowLeft className="w-6 h-6 text-gray-600" />
+                <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                  <ArrowLeft className="w-6 h-6" />
                 </div>
               </Link>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h2 className="text-3xl font-bold text-gray-900">
                   ছাত্র-ছাত্রী তালিকা
-                </h1>
+                </h2>
                 <p className="text-gray-600 text-lg">
                   সকল ছাত্র-ছাত্রীর তথ্য দেখুন
                 </p>
               </div>
             </div>
+
+            <div className="text-right">
+              <div className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl text-white">
+                <Users className="w-5 h-5" />
+                <span className="font-bold">মোট: {filteredStudents.length} জন</span>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-center">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors duration-300" />
               <input
                 type="text"
                 placeholder="নাম, পিতার নাম বা ফোন নম্বর দিয়ে খুঁজুন..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 transition-all duration-300 hover:border-gray-400"
               />
             </div>
 
-            <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <div className="relative group">
+              <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-purple-500 transition-colors duration-300" />
               <select
                 value={filterClass}
                 onChange={(e) => setFilterClass(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 transition-all duration-300 hover:border-gray-400 appearance-none cursor-pointer"
               >
                 <option value="">সব শ্রেণি</option>
                 {classes.map((cls) => (
@@ -128,9 +221,12 @@ const StudentPage = () => {
               </select>
             </div>
 
-            <div className="flex items-center justify-end">
-              <div className="text-right">
-                <p className="text-sm text-gray-500">মোট ছাত্র-ছাত্রী</p>
+            <div className="flex items-center justify-center">
+              <div className="text-center">
+                <div className="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                  <span>সক্রিয় ছাত্র-ছাত্রী</span>
+                </div>
                 <p className="text-2xl font-bold text-gray-900">
                   {filteredStudents.length} জন
                 </p>
@@ -143,16 +239,23 @@ const StudentPage = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
         >
           {filteredStudents.length === 0 ? (
-            <div className="md:col-span-2 lg:col-span-3 xl:col-span-4 p-12 text-center bg-white rounded-xl shadow-sm border border-gray-200">
-              <GraduationCap className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <div className="md:col-span-2 lg:col-span-3 xl:col-span-4 p-16 text-center bg-white rounded-3xl shadow-xl border border-gray-100">
+              <GraduationCap className="w-20 h-20 text-gray-400 mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 কোনো ছাত্র-ছাত্রী পাওয়া যায়নি
               </h3>
-              <p className="text-gray-600">অনুসন্ধানের শর্ত পরিবর্তন করুন।</p>
+              <p className="text-gray-600 text-lg mb-6">অনুসন্ধানের শর্ত পরিবর্তন করুন।</p>
+              <button 
+                onClick={() => { setSearchTerm(""); setFilterClass(""); }}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                <Eye className="w-4 h-4" />
+                <span>সব দেখুন</span>
+              </button>
             </div>
           ) : (
             filteredStudents.map((student, index) => (
@@ -160,55 +263,141 @@ const StudentPage = () => {
                 key={student._id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col items-center text-center transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+                transition={{ delay: index * 0.05, duration: 0.5 }}
+                className="group relative bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-500 transform hover:shadow-2xl hover:-translate-y-3"
               >
-                <div className="relative w-28 h-28 mb-4">
-                  {student.photo ? (
-                    <img
-                      src={student.photo}
-                      alt={student.name}
-                      className="h-full w-full rounded-full object-cover border-4 border-white shadow-md"
-                    />
-                  ) : (
-                    <div className="h-full w-full rounded-full bg-gray-200 flex items-center justify-center border-4 border-white shadow-md">
-                      <GraduationCap className="w-12 h-12 text-gray-400" />
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Photo Section */}
+                <div className="relative p-8 pb-4">
+                  <div className="relative w-32 h-32 mx-auto">
+                    {student.photo ? (
+                      <img
+                        src={student.photo}
+                        alt={student.name}
+                        className="h-full w-full rounded-full object-cover border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="h-full w-full rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                        <GraduationCap className="w-16 h-16 text-gray-400" />
+                      </div>
+                    )}
+                    
+                    {/* Roll Badge */}
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-white shadow-lg">
+                      {student.roll}
                     </div>
-                  )}
-                </div>
-
-                <h3 className="text-xl font-bold text-gray-900">
-                  {student.name}
-                </h3>
-                <p className="text-sm font-medium text-gray-600 mb-2">
-                  {student.class} শ্রেণি
-                </p>
-
-                <div className="flex items-center space-x-2 text-sm mb-4">
-                  <span className="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                    রোল: {student.roll}
-                  </span>
-                  {student.group && (
-                    <span className="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                      {student.group}
-                    </span>
-                  )}
-                </div>
-
-                <div className="space-y-1 w-full text-left">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <User className="w-4 h-4 mr-2" />
-                    <span>পিতা: {student.fatherName}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Phone className="w-4 h-4 mr-2" />
-                    <span>অভিভাবক: {student.guardianNumber}</span>
                   </div>
                 </div>
+
+                {/* Content Section */}
+                <div className="px-8 pb-8 text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                    {student.name}
+                  </h3>
+                  
+                  {/* Class and Group */}
+                  <div className="flex items-center justify-center space-x-2 mb-4">
+                    <div className={`inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r ${getClassColor(student.class)} rounded-full text-white text-sm font-medium`}>
+                      {getClassIcon(student.class)}
+                      <span>{student.class} শ্রেণি</span>
+                    </div>
+                    {student.group && (
+                      <div className="inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full text-white text-sm font-medium">
+                        <BookOpen className="w-4 h-4" />
+                        <span>{student.group}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Gender Badge */}
+                  <div className="flex items-center justify-center mb-4">
+                    <div className={`inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r ${getGenderColor(student.gender)} rounded-full text-white text-sm font-medium`}>
+                      {getGenderIcon(student.gender)}
+                      <span>{student.gender}</span>
+                    </div>
+                  </div>
+
+                  {/* Family Info */}
+                  <div className="space-y-3 text-left mb-6">
+                    <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-blue-600 transition-colors duration-300">
+                      <User className="w-4 h-4 text-blue-500" />
+                      <span className="truncate">পিতা: {student.fatherName}</span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-green-600 transition-colors duration-300">
+                      <User className="w-4 h-4 text-green-500" />
+                      <span className="truncate">মাতা: {student.motherName}</span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-purple-600 transition-colors duration-300">
+                      <Phone className="w-4 h-4 text-purple-500" />
+                      <span>অভিভাবক: {student.guardianNumber}</span>
+                    </div>
+                    {student.dateOfBirth && (
+                      <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-orange-600 transition-colors duration-300">
+                        <Calendar className="w-4 h-4 text-orange-500" />
+                        <span>জন্ম: {student.dateOfBirth}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center justify-center space-x-3 pt-6 border-t border-gray-100">
+                    <button className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                      <Heart className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                      <Phone className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Decorative Corner */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-bl-full opacity-50" />
               </motion.div>
             ))
           )}
         </motion.div>
+
+        {/* Statistics Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {classes.map((cls, index) => {
+            const classStudents = students.filter(s => s.class === cls);
+            const maleStudents = classStudents.filter(s => s.gender === "পুরুষ").length;
+            const femaleStudents = classStudents.filter(s => s.gender === "মহিলা").length;
+            
+            return (
+              <motion.div
+                key={cls}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 + index * 0.1 }}
+                className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div className={`inline-flex p-3 bg-gradient-to-r ${getClassColor(cls)} rounded-2xl text-white mb-4`}>
+                  {getClassIcon(cls)}
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{cls} শ্রেণি</h3>
+                <div className="text-3xl font-bold text-blue-600 mb-2">{classStudents.length} জন</div>
+                <div className="flex justify-center space-x-4 text-sm text-gray-600">
+                  <span>ছেলে: {maleStudents}</span>
+                  <span>মেয়ে: {femaleStudents}</span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Bottom CTA */}
+      
       </div>
     </div>
   );
