@@ -10,7 +10,6 @@ import {
   Send, 
   CheckCircle, 
   MessageCircle,
-  Globe,
   Building,
   User,
   Calendar

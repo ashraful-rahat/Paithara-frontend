@@ -7,7 +7,7 @@ import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
 const MENU_ITEMS = [
   { label: "হোম", href: "/" },
   { label: "আমাদের সম্পর্কে", href: "/about" },
-
+  { label: "শ্রেণীকক্ষ", href: "/classroom" },
   { label: "সকল শিক্ষার্থী", href: "/students" },
   { label: "শিক্ষক তালিকা", href: "/teachers" },
   { label: "ইভেন্টস", href: "/events" },

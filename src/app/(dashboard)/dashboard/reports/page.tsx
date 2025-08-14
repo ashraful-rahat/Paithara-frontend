@@ -4,19 +4,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
-  BookOpen,
   Users,
   GraduationCap,
   BarChart2,
-  List,
-  Mail,
-  Phone,
-  ArrowUpRight,
-  ArrowDownRight,
-  User as UserIcon,
   ArrowRight,
-  Bell,
   FileText,
+  Bell,
 } from "lucide-react";
 import Link from "next/link";
 

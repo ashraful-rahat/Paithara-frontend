@@ -5,12 +5,8 @@ import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import {
   Bell,
-  Trash2,
-  Plus,
-  X,
   ArrowLeft,
   Link as LinkIcon,
-  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/utils/axios";
@@ -33,7 +29,7 @@ const NoticePage = () => {
     try {
       const res = await axiosInstance.get("/notices");
       setNotices(res.data?.data || []);
-    } catch (error) {
+    } catch {
       toast.error("নোটিশ লোড করতে সমস্যা হয়েছে");
     } finally {
       setLoading(false);
@@ -71,7 +67,7 @@ const NoticePage = () => {
 
       setFormData({ title: "", link: "" });
       fetchNotices();
-    } catch (error) {
+    } catch {
       Swal.fire({
         icon: "error",
         title: "ভুল!",
@@ -106,6 +102,7 @@ const NoticePage = () => {
             "success"
           );
           fetchNotices();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
           Swal.fire("ভুল হয়েছে!", "নোটিশ মুছতে সমস্যা হয়েছে।", "error");
         }

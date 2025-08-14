@@ -8,7 +8,6 @@ import {
   BookOpen,
   Sparkles,
   GraduationCap,
-  Users,
 } from "lucide-react";
 
 const streams = [

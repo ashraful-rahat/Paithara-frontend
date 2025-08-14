@@ -12,12 +12,9 @@ import {
   Menu,
   X,
   LogOut,
-  School,
-  BookOpen,
-  Calendar,
   BarChart3,
   FileText,
-  Bell,
+  School,
   Search,
 } from "lucide-react";
 

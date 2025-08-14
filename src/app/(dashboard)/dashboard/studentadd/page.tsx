@@ -6,7 +6,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { GraduationCap, Upload, Save, ArrowLeft, X } from "lucide-react";
+import Image from "next/image";
+import { Upload, Save, ArrowLeft, X } from "lucide-react";
 import Link from "next/link";
 import Select from "react-select";
 import axiosInstance from "@/utils/axios"; // axiosInstance ইমপোর্ট করা হয়েছে
@@ -109,6 +110,7 @@ const StudentAddPage = () => {
         setPhoto(null);
         setPhotoPreview("");
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.response?.data?.message || "কিছু ভুল হয়েছে");
     } finally {
@@ -382,11 +384,14 @@ const StudentAddPage = () => {
               </div>
               {photoPreview && (
                 <div className="relative">
-                  <img
-                    src={photoPreview}
-                    alt="Preview"
-                    className="w-20 h-20 object-cover rounded-md"
-                  />
+                  <div className="relative w-20 h-20">
+                    <Image
+                      src={photoPreview}
+                      alt="Preview"
+                      fill
+                      className="object-cover rounded-md"
+                    />
+                  </div>
                   <button
                     type="button"
                     onClick={() => {

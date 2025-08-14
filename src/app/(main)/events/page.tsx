@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Calendar, Clock, MapPin, Users, ArrowRight, Star, Trophy, Heart } from "lucide-react";
 
 const EventsPage = () => {
@@ -211,10 +212,11 @@ const EventsPage = () => {
               {/* Image Section */}
               <div className="relative h-64 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
-                <img
+                <Image
                   src={event.image}
                   alt={event.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 
                 {/* Event Number Badge */}

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 import {
   GraduationCap,
   Plus,
@@ -63,7 +64,7 @@ const StudentListPage = () => {
       if (response.status === 200) {
         setStudents(response.data.data || []);
       }
-    } catch (error) {
+    } catch {
       toast.error("ছাত্র-ছাত্রী তথ্য লোড করতে সমস্যা হয়েছে");
     } finally {
       setLoading(false);
@@ -99,7 +100,7 @@ const StudentListPage = () => {
               "error"
             );
           }
-        } catch (error) {
+        } catch {
           Swal.fire("ভুল হয়েছে!", "কিছু ভুল হয়েছে।", "error");
         }
       }
@@ -398,11 +399,14 @@ const StudentListPage = () => {
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       {student.photo ? (
-                        <img
-                          src={student.photo}
-                          alt={student.name}
-                          className="h-12 w-12 rounded-full object-cover border-2 border-gray-200"
-                        />
+                        <div className="relative h-12 w-12">
+                          <Image
+                            src={student.photo}
+                            alt={student.name}
+                            fill
+                            className="rounded-full object-cover border-2 border-gray-200"
+                          />
+                        </div>
                       ) : (
                         <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center border-2 border-gray-200">
                           <GraduationCap className="w-5 h-5 text-gray-400" />
@@ -512,11 +516,14 @@ const StudentListPage = () => {
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
               <div>
                 {selectedStudent.photo ? (
-                  <img
-                    alt={selectedStudent.name}
-                    className="h-80 w-full rounded-xl object-cover shadow-lg"
-                    src={selectedStudent.photo}
-                  />
+                  <div className="relative h-80 w-full">
+                    <Image
+                      alt={selectedStudent.name}
+                      src={selectedStudent.photo}
+                      fill
+                      className="rounded-xl object-cover shadow-lg"
+                    />
+                  </div>
                 ) : (
                   <div className="flex h-80 w-full items-center justify-center rounded-xl bg-gray-200 shadow-lg">
                     <GraduationCap className="h-16 w-16 text-gray-400" />

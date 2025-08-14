@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 import {
   Users,
   Search,
@@ -13,8 +14,6 @@ import {
   BookOpen,
   Award,
   Mail,
-  Clock,
-  MapPin,
   FileText,
   Star,
   GraduationCap,
@@ -26,7 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/utils/axios";
-import Swal from "sweetalert2";
+
 
 interface Staff {
   _id: string;
@@ -76,7 +75,7 @@ const TeacherPage = () => {
       if (response.status === 200) {
         setStaff(response.data.data || []);
       }
-    } catch (error) {
+    } catch {
       toast.error("কর্মকর্তা-কর্মচারী তথ্য লোড করতে সমস্যা হয়েছে");
     } finally {
       setLoading(false);
@@ -305,10 +304,11 @@ const TeacherPage = () => {
                 <div className="relative p-8 pb-4">
                   <div className="relative w-32 h-32 mx-auto">
                     {member.photo ? (
-                      <img
+                      <Image
                         src={member.photo}
                         alt={member.name}
-                        className="h-full w-full rounded-full object-cover border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500"
+                        fill
+                        className="rounded-full object-cover border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500"
                       />
                     ) : (
                       <div className="h-full w-full rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500">

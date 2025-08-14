@@ -6,8 +6,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 import {
-  UserPlus,
   Upload,
   Save,
   ArrowLeft,
@@ -15,14 +15,9 @@ import {
   Plus,
   X,
   User,
-  Mail,
-  Phone,
-  Award,
-  Clock,
-  Calendar,
-  MapPin,
   BookOpen,
-  GraduationCap,
+  MapPin,
+
 } from "lucide-react";
 import Link from "next/link";
 import Select from "react-select";
@@ -191,6 +186,7 @@ const StaffAddPage = () => {
         setPhoto(null);
         setPhotoPreview("");
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.response?.data?.message || "কিছু ভুল হয়েছে");
     } finally {
@@ -399,11 +395,14 @@ const StaffAddPage = () => {
               </div>
               {photoPreview && (
                 <div className="relative">
-                  <img
-                    src={photoPreview}
-                    alt="Preview"
-                    className="w-24 h-24 object-cover rounded-lg shadow-md"
-                  />
+                  <div className="relative w-24 h-24">
+                    <Image
+                      src={photoPreview}
+                      alt="Preview"
+                      fill
+                      className="object-cover rounded-lg shadow-md"
+                    />
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
@@ -471,10 +470,12 @@ const StaffAddPage = () => {
                     value={subjects.filter((s) =>
                       pref.subjects.includes(s.value)
                     )}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onChange={(options: any) =>
                       updateSubjectPreference(
                         index,
                         "subjects",
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         options ? options.map((o: any) => o.value) : []
                       )
                     }

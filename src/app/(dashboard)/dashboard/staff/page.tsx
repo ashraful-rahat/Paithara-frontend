@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 import {
   Users,
   Plus,
@@ -72,7 +73,7 @@ const StaffListPage = () => {
     try {
       const response = await axiosInstance.get("/staff");
       setStaff(response.data.data || []);
-    } catch (error) {
+    } catch {
       toast.error("কর্মকর্তা-কর্মচারী তথ্য লোড করতে সমস্যা হয়েছে");
     } finally {
       setLoading(false);
@@ -109,7 +110,7 @@ const StaffListPage = () => {
               "error"
             );
           }
-        } catch (error) {
+        } catch {
           Swal.fire("ভুল হয়েছে!", "কিছু ভুল হয়েছে।", "error");
         }
       }
@@ -309,11 +310,14 @@ const StaffListPage = () => {
                     className="hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <img
-                        src={member.photo}
-                        alt={member.name}
-                        className="h-12 w-12 rounded-full object-cover border-2 border-gray-200"
-                      />
+                      <div className="relative h-12 w-12">
+                        <Image
+                          src={member.photo}
+                          alt={member.name}
+                          fill
+                          className="rounded-full object-cover border-2 border-gray-200"
+                        />
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
@@ -411,11 +415,14 @@ const StaffListPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <img
-                  src={selectedStaff.photo}
-                  alt={selectedStaff.name}
-                  className="w-full h-80 object-cover rounded-xl shadow-lg"
-                />
+                <div className="relative w-full h-80">
+                  <Image
+                    src={selectedStaff.photo}
+                    alt={selectedStaff.name}
+                    fill
+                    className="object-cover rounded-xl shadow-lg"
+                  />
+                </div>
               </div>
               <div className="space-y-6">
                 <div>

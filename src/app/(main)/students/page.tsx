@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 import {
   GraduationCap,
   Search,
@@ -13,13 +14,10 @@ import {
   BookOpen,
   Users,
   Calendar,
-  MapPin,
-  Star,
   Trophy,
   Award,
   Heart,
   Eye,
-  Sparkles,
   TrendingUp,
   BookOpenCheck
 } from "lucide-react";
@@ -58,7 +56,7 @@ const StudentPage = () => {
       if (response.status === 200) {
         setStudents(response.data.data || []);
       }
-    } catch (error) {
+    } catch {
       toast.error("ছাত্র-ছাত্রী তথ্য লোড করতে সমস্যা হয়েছে");
     } finally {
       setLoading(false);
@@ -273,10 +271,11 @@ const StudentPage = () => {
                 <div className="relative p-8 pb-4">
                   <div className="relative w-32 h-32 mx-auto">
                     {student.photo ? (
-                      <img
+                      <Image
                         src={student.photo}
                         alt={student.name}
-                        className="h-full w-full rounded-full object-cover border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500"
+                        fill
+                        className="rounded-full object-cover border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500"
                       />
                     ) : (
                       <div className="h-full w-full rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center border-4 border-white shadow-2xl group-hover:scale-110 transition-transform duration-500">

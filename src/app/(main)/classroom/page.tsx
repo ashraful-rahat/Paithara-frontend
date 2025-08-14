@@ -9,8 +9,10 @@ import {
   GraduationCap, 
   Lightbulb, 
   Star, 
+  Heart,
   Clock,
-  MapPin
+  MapPin,
+  Award
 } from "lucide-react";
 
 const ClassroomPage = () => {
@@ -92,7 +94,46 @@ const ClassroomPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-
+      {/* Hero Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative py-20 px-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-center overflow-hidden"
+      >
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:20px_20px] opacity-20" />
+        
+        <div className="relative max-w-7xl mx-auto">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="inline-block p-3 bg-white/20 backdrop-blur-sm rounded-full mb-6"
+          >
+            <BookOpen className="w-10 h-10 text-white" />
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-4xl md:text-6xl font-bold text-white mb-6"
+          >
+            আমাদের শ্রেণীকক্ষ
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-2xl font-medium text-blue-100 max-w-3xl mx-auto leading-relaxed"
+          >
+            শিক্ষার্থীদের মেধা বিকাশের জন্য সুন্দর ও সুবিধাজনক শ্রেণীকক্ষ
+          </motion.p>
+        </div>
+      </motion.section>
 
       <div className="max-w-7xl mx-auto px-6 py-16 space-y-20">
         {/* Main Classroom Images */}
@@ -263,7 +304,30 @@ const ClassroomPage = () => {
           </div>
         </motion.section>
 
-      
+        {/* Call to Action */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 rounded-3xl p-12 text-center text-white relative overflow-hidden"
+        >
+          {/* Background Pattern */}
+          <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:20px_20px] opacity-20" />
+          
+          <div className="relative z-10">
+            <Award className="w-16 h-16 text-yellow-400 mx-auto mb-6" />
+            <h3 className="text-3xl font-bold mb-4">আমাদের শ্রেণীকক্ষে যোগ দিন</h3>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              আপনার সন্তানকে একটি সুন্দর ও শিক্ষামূলক পরিবেশে গড়ে তুলতে আমাদের সাথে যোগাযোগ করুন
+            </p>
+            <button className="inline-flex items-center space-x-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <Heart className="w-5 h-5" />
+              <span>যোগাযোগ করুন</span>
+            </button>
+          </div>
+        </motion.section>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const Notice: React.FC = () => {
       try {
         const response = await axiosInstance.get("/notices");
         setNotices(response.data.data || []); // adapt based on your API response structure
-      } catch (error) {
+      } catch {
         toast.error("নোটিশ লোড করতে সমস্যা হয়েছে");
       } finally {
         setLoading(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Users,
@@ -27,6 +27,7 @@ interface DashboardStats {
 }
 
 const DashboardPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [stats, setStats] = useState<DashboardStats>({
     totalStudents: 0,
     totalStaff: 0,
@@ -34,7 +35,7 @@ const DashboardPage = () => {
     recentActivities: 0,
   });
 
-  const [loading, setLoading] = useState(true);
+
 
   // useEffect(() => {
   //   // Fetch dashboard stats

@@ -1,15 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  LayoutDashboard,
   Users,
   GraduationCap,
   BookOpen,
   Calendar,
   TrendingUp,
   BarChart3,
-  FileText,
-  Bell,
+ 
   Settings,
   ArrowRight,
 } from "lucide-react";

@@ -11,7 +11,6 @@ import {
   GraduationCap,
   School,
   HeartHandshake,
-  Globe,
   Target,
   Lightbulb,
   Star,
