@@ -160,7 +160,7 @@ const StaffListPage = () => {
       >
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center space-x-4 mb-4 lg:mb-0">
-            <Link href="/Dashboard">
+            <Link href="/dashboard">
               <div className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
                 <ArrowLeft className="w-6 h-6 text-gray-600" />
               </div>
@@ -174,7 +174,7 @@ const StaffListPage = () => {
               </p>
             </div>
           </div>
-          <Link href="/Dashboard/Staffadd">
+          <Link href="/dashboard/Staffadd">
             <button className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
               <Plus className="w-5 h-5 mr-2" />
               নতুন যোগ করুন
@@ -269,7 +269,7 @@ const StaffListPage = () => {
               নতুন কর্মকর্তা-কর্মচারী যোগ করুন অথবা অনুসন্ধানের শর্ত পরিবর্তন
               করুন
             </p>
-            <Link href="/Dashboard/Staffadd">
+            <Link href="/dashboard/Staffadd">
               <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 কর্মকর্তা যোগ করুন
               </button>
@@ -315,6 +315,7 @@ const StaffListPage = () => {
                           src={member.photo}
                           alt={member.name}
                           fill
+                            sizes="(max-width: 640px) 100vw, 50vw"
                           className="rounded-full object-cover border-2 border-gray-200"
                         />
                       </div>
@@ -368,7 +369,7 @@ const StaffListPage = () => {
                         >
                           <Eye className="w-4 h-4" />
                         </button>
-                        <Link href={`/Dashboard/staff/edit/${member._id}`}>
+                        <Link href={`/dashboard/staff/edit/${member._id}`}>
                           <button
                             className="p-2 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors"
                             title="সম্পাদনা করুন"
@@ -420,6 +421,7 @@ const StaffListPage = () => {
                     src={selectedStaff.photo}
                     alt={selectedStaff.name}
                     fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-cover rounded-xl shadow-lg"
                   />
                 </div>

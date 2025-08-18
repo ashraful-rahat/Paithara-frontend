@@ -156,7 +156,7 @@ const StudentListPage = () => {
       >
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center space-x-4 mb-4 lg:mb-0">
-            <Link href="/Dashboard">
+            <Link href="/dashboard">
               <div className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
                 <ArrowLeft className="w-6 h-6 text-gray-600" />
               </div>
@@ -170,7 +170,7 @@ const StudentListPage = () => {
               </p>
             </div>
           </div>
-          <Link href="/Dashboard/studentadd">
+          <Link href="/dashboard/studentadd">
             <button className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
               <Plus className="w-5 h-5 mr-2" />
               নতুন যোগ করুন
@@ -351,7 +351,7 @@ const StudentListPage = () => {
             <p className="text-gray-600 mb-6">
               নতুন ছাত্র-ছাত্রী যোগ করুন অথবা অনুসন্ধানের শর্ত পরিবর্তন করুন
             </p>
-            <Link href="/Dashboard/studentadd">
+            <Link href="/dashboard/studentadd">
               <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 ছাত্র-ছাত্রী যোগ করুন
               </button>
@@ -468,7 +468,7 @@ const StudentListPage = () => {
                         >
                           <Eye className="h-4 w-4" />
                         </button>
-                        <Link href={`/Dashboard/students/edit/${student._id}`}>
+                        <Link href={`/dashboard/students/edit/${student._id}`}>
                           <button
                             className="rounded-lg p-2 text-green-600 transition-colors hover:bg-green-50 hover:text-green-900"
                             title="সম্পাদনা করুন"

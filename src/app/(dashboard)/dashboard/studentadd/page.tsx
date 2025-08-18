@@ -126,7 +126,7 @@ const StudentAddPage = () => {
         className="mb-8"
       >
         <div className="flex items-center space-x-4 mb-4">
-          <Link href="/Dashboard">
+          <Link href="/dashboard">
             <ArrowLeft className="w-6 h-6 text-gray-600 hover:text-gray-800" />
           </Link>
           <div>
@@ -389,6 +389,7 @@ const StudentAddPage = () => {
                       src={photoPreview}
                       alt="Preview"
                       fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
                       className="object-cover rounded-md"
                     />
                   </div>
@@ -409,7 +410,7 @@ const StudentAddPage = () => {
 
           {/* Submit Button */}
           <div className="flex justify-end space-x-4">
-            <Link href="/Dashboard">
+            <Link href="/dashboard">
               <button
                 type="button"
                 className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"

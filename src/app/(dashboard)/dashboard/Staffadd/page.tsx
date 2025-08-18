@@ -203,7 +203,7 @@ const StaffAddPage = () => {
         className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
       >
         <div className="flex items-center space-x-4 mb-4">
-          <Link href="/Dashboard">
+          <Link href="/dashboard">
             <div className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
               <ArrowLeft className="w-6 h-6 text-gray-600" />
             </div>
@@ -400,6 +400,7 @@ const StaffAddPage = () => {
                       src={photoPreview}
                       alt="Preview"
                       fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
                       className="object-cover rounded-lg shadow-md"
                     />
                   </div>
@@ -498,7 +499,7 @@ const StaffAddPage = () => {
 
           {/* Submit Button */}
           <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-            <Link href="/Dashboard">
+            <Link href="/dashboard">
               <button
                 type="button"
                 className="px-8 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
