@@ -10,6 +10,7 @@ const MENU_ITEMS = [
   { label: "শ্রেণীকক্ষ", href: "/classroom" },
   { label: "সকল শিক্ষার্থী", href: "/students" },
   { label: "শিক্ষক তালিকা", href: "/teachers" },
+  { label: "ফলাফল", href: "/results" },
   { label: "ইভেন্টস", href: "/events" },
   { label: "যোগাযোগ", href: "/contact" },
 ];

@@ -67,12 +67,12 @@ const SideBarDashboard = () => {
     //   current: pathname === "/dashboard/exams",
     // },
 
-    {
-      name: "রিপোর্ট",
-      href: "/dashboard/reports",
-      icon: BarChart3,
-      current: pathname === "/Dashboard/reports",
-    },
+{
+  name: "রেজাল্ট যোগ করুন",
+  href: "/dashboard/resultadd",
+  icon: BarChart3, // চাইলে অন্য আইকন দাও
+  current: pathname === "/dashboard/resultadd", // ঠিক path দাও (d ছোট)
+},
     {
       name: "নোটিশ",
       href: "/dashboard/notices",
