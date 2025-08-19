@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
 import {
   Users,
@@ -7,13 +10,44 @@ import {
   Calendar,
   TrendingUp,
   BarChart3,
- 
   Settings,
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { toast } from 'react-hot-toast';
 
 const FullDashboard = () => {
+  const router = useRouter();
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // এই ফাংশনটি ব্যবহারকারীর রোল চেক করবে
+    const checkUserRole = () => {
+      const token = localStorage.getItem('token');
+      const storedRole = localStorage.getItem('userRole'); 
+      
+      if (!token || storedRole !== 'admin') {
+          // যদি টোকেন না থাকে বা রোল 'admin' না হয়, তাহলে একটি ত্রুটি মেসেজ দেখানো হবে
+          toast.error("আপনার এই পেজটি দেখার অনুমতি নেই।");
+          // এরপর তাকে অন্য কোনো পেজে (যেমন লগইন পেজ) রিডাইরেক্ট করবে
+          router.push('/login'); 
+      } else {
+        setUserRole(storedRole);
+        setLoading(false);
+      }
+    };
+    checkUserRole();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   const quickStats = [
     {
       title: "মোট ছাত্র-ছাত্রী",

@@ -1,5 +1,3 @@
-// src/app/(dashboard)/dashboard/staffadd/page.tsx
-
 "use client";
 
 import React, { useState } from "react";
@@ -17,7 +15,6 @@ import {
   User,
   BookOpen,
   MapPin,
-
 } from "lucide-react";
 import Link from "next/link";
 import Select from "react-select";
@@ -170,25 +167,41 @@ const StaffAddPage = () => {
       formData.append("experience", data.experience.toString());
       formData.append("address", data.address);
       formData.append("dateOfJoining", data.dateOfJoining);
-      formData.append("category", data.category); // এখন এটি শুধুমাত্র স্ট্রিং ভ্যালু পাঠাবে
+      formData.append("category", data.category);
       formData.append("photo", photo);
       formData.append("subjectPreferences", JSON.stringify(subjectPreferences));
 
-      const response = await axiosInstance.post("/staff/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      // ডেটা কনসোলে লগ করুন
+      console.log("Submitting data:", Object.fromEntries(formData.entries()));
+
+      const response = await axiosInstance.post("/staff/create", formData);
 
       if (response.status === 201) {
         toast.success("কর্মকর্তা সফলভাবে যোগ হয়েছে");
+        console.log("Successful response:", response.data);
         reset();
         setPhoto(null);
         setPhotoPreview("");
+        setSubjectPreferences([]);
       }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "কিছু ভুল হয়েছে");
+      console.error("Error during form submission:", error);
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        console.error("Error status:", error.response.status);
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast.error("প্রমাণীকরণ টোকেন অনুপস্থিত বা অবৈধ।");
+        } else {
+          toast.error(error.response.data?.message || "কিছু ভুল হয়েছে");
+        }
+      } else if (error.request) {
+        console.error("Error request data:", error.request);
+        toast.error("সার্ভার থেকে কোনো প্রতিক্রিয়া পাওয়া যায়নি।");
+      } else {
+        console.error("Error message:", error.message);
+        toast.error("নেটওয়ার্ক ত্রুটি অথবা সার্ভার ডাউন।");
+      }
     } finally {
       setLoading(false);
     }

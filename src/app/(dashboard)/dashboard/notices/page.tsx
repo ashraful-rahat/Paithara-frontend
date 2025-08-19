@@ -29,7 +29,8 @@ const NoticePage = () => {
     try {
       const res = await axiosInstance.get("/notices");
       setNotices(res.data?.data || []);
-    } catch {
+    } catch (error) {
+      console.error("Failed to fetch notices:", error);
       toast.error("নোটিশ লোড করতে সমস্যা হয়েছে");
     } finally {
       setLoading(false);
@@ -50,13 +51,13 @@ const NoticePage = () => {
     setLoading(true);
 
     try {
-      // Send data only if the link field has a value
       const dataToSend = {
         title: formData.title,
         ...(formData.link && { link: formData.link }),
       };
-
-      await axiosInstance.post("/notices", dataToSend);
+      
+      const res = await axiosInstance.post("/notices", dataToSend);
+      console.log("Successful response from API:", res.data);
 
       Swal.fire({
         icon: "success",
@@ -67,13 +68,25 @@ const NoticePage = () => {
 
       setFormData({ title: "", link: "" });
       fetchNotices();
-    } catch {
-      Swal.fire({
-        icon: "error",
-        title: "ভুল!",
-        text: "নোটিশ যুক্ত করতে সমস্যা হয়েছে।",
-        confirmButtonText: "ঠিক আছে",
-      });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error("Failed to add notice:", error);
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        Swal.fire({
+          icon: "error",
+          title: "ভুল হয়েছে!",
+          text: error.response.data?.message || "নোটিশ যুক্ত করতে সমস্যা হয়েছে।",
+          confirmButtonText: "ঠিক আছে",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "ভুল!",
+          text: "নেটওয়ার্ক ত্রুটি অথবা সার্ভার ডাউন।",
+          confirmButtonText: "ঠিক আছে",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -85,7 +98,7 @@ const NoticePage = () => {
 
     Swal.fire({
       title: "আপনি কি নিশ্চিত?",
-      text: "এই নোটিশটি মুছে ফেলার পর আর ফিরিয়ে আনা যাবে না!",
+      text: "এই নোটিশটি মুছে ফেলার পর আর ফিরিয়ে আনা যাবে না!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
@@ -102,9 +115,24 @@ const NoticePage = () => {
             "success"
           );
           fetchNotices();
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
-          Swal.fire("ভুল হয়েছে!", "নোটিশ মুছতে সমস্যা হয়েছে।", "error");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          console.error("Failed to delete notice:", error);
+          if (error.response) {
+            Swal.fire({
+              icon: "error",
+              title: "ভুল হয়েছে!",
+              text: error.response.data?.message || "নোটিশ মুছতে সমস্যা হয়েছে।",
+              confirmButtonText: "ঠিক আছে",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "ভুল!",
+              text: "নেটওয়ার্ক ত্রুটি অথবা সার্ভার ডাউন।",
+              confirmButtonText: "ঠিক আছে",
+            });
+          }
         }
       }
     });

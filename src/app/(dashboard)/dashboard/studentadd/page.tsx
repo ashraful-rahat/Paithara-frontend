@@ -73,50 +73,70 @@ const StudentAddPage = () => {
     }
   };
 
-  const onSubmit = async (data: StudentFormData) => {
-    if (!photo) {
-      toast.error("ছবি আপলোড করুন");
-      return;
-    }
+const onSubmit = async (data: StudentFormData) => {
+  if (!photo) {
+    toast.error("ছবি আপলোড করুন");
+    return;
+  }
 
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("roll", data.roll.toString());
-      formData.append("class", data.class);
-      if (data.group && data.group !== "") {
-        // এখানে শর্ত যুক্ত করা হয়েছে
-        formData.append("group", data.group);
-      }
-      formData.append("gender", data.gender);
-      formData.append("fatherName", data.fatherName);
-      formData.append("motherName", data.motherName);
-      formData.append("guardianNumber", data.guardianNumber);
-      formData.append("address", data.address || "");
-      formData.append("dateOfBirth", data.dateOfBirth || "");
-      formData.append("photo", photo);
+  setLoading(true);
+  try {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("roll", data.roll.toString());
+    formData.append("class", data.class);
+    if (data.group && data.group !== "") {
+      formData.append("group", data.group);
+    }
+    formData.append("gender", data.gender);
+    formData.append("fatherName", data.fatherName);
+    formData.append("motherName", data.motherName);
+    formData.append("guardianNumber", data.guardianNumber);
+    formData.append("address", data.address || "");
+    formData.append("dateOfBirth", data.dateOfBirth || "");
+    formData.append("photo", photo);
 
-      // এখানে headers অপশনটি যোগ করা হয়েছে
-      const response = await axiosInstance.post("/students/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    // ডেটা কনসোলে লগ করুন
+    console.log("Submitting data:", Object.fromEntries(formData.entries()));
 
-      if (response.status === 201) {
-        toast.success("ছাত্র-ছাত্রী সফলভাবে যোগ হয়েছে");
-        reset();
-        setPhoto(null);
-        setPhotoPreview("");
-      }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "কিছু ভুল হয়েছে");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // এখান থেকে headers অপশনটি সরিয়ে দেওয়া হয়েছে, কারণ FormData-র জন্য এটি স্বয়ংক্রিয়ভাবে সেট হয়ে যায়
+    const response = await axiosInstance.post("/students/create", formData);
+
+    if (response.status === 201) {
+      toast.success("ছাত্র-ছাত্রী সফলভাবে যোগ হয়েছে");
+      console.log("Successful response:", response.data);
+      reset();
+      setPhoto(null);
+      setPhotoPreview("");
+    }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    // ত্রুটির বিস্তারিত তথ্য কনসোলে লগ করুন
+    console.error("Error during form submission:", error);
+    
+    if (error.response) {
+      // সার্ভার থেকে আসা ত্রুটি (যেমন 401, 403, 404)
+      console.error("Error response data:", error.response.data);
+      console.error("Error status:", error.response.status);
+      if (error.response.status === 401) {
+        toast.error("প্রমাণীকরণ টোকেন অনুপস্থিত বা অবৈধ।");
+      } else {
+        toast.error(error.response.data?.message || "কিছু ভুল হয়েছে");
+      }
+    } else if (error.request) {
+      // অনুরোধ পাঠানো হয়েছিল, কিন্তু কোনো প্রতিক্রিয়া পাওয়া যায়নি
+      console.error("Error request data:", error.request);
+      toast.error("সার্ভার থেকে কোনো প্রতিক্রিয়া পাওয়া যায়নি।");
+    } else {
+      // অন্যান্য ত্রুটি
+      console.error("Error message:", error.message);
+      toast.error("নেটওয়ার্ক ত্রুটি অথবা সার্ভার ডাউন।");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       {/* Header */}

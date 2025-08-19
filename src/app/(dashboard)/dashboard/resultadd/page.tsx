@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
-import { BarChart3, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/utils/axios";
 import Swal from "sweetalert2";
@@ -82,9 +82,11 @@ export default function ResultPage() {
       };
 
       // API-তে ডেটা পাঠানো
-      await axiosInstance.post("/results", newResult);
+      const res = await axiosInstance.post("/results", newResult);
+      console.log("Successful response from API:", res.data);
 
       Swal.fire("✅ যুক্ত হয়েছে!", "রেজাল্ট সফলভাবে সংরক্ষিত হয়েছে", "success");
+      
       // ফর্ম রিসেট করা
       setFormData({
         class: "",
@@ -98,9 +100,19 @@ export default function ResultPage() {
 
       // নতুন ডেটা লোড করা
       fetchResults();
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Failed to add result:", error);
-      Swal.fire("❌ ভুল হয়েছে!", "রেজাল্ট যুক্ত করা যায়নি", "error");
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        Swal.fire(
+          "❌ ভুল হয়েছে!",
+          error.response.data?.message || "রেজাল্ট যুক্ত করা যায়নি",
+          "error"
+        );
+      } else {
+        Swal.fire("❌ ভুল হয়েছে!", "নেটওয়ার্ক ত্রুটি অথবা সার্ভার ডাউন।", "error");
+      }
     }
   };
 
@@ -121,9 +133,18 @@ export default function ResultPage() {
         await axiosInstance.delete(`/results/${id}`);
         Swal.fire("✅ ডিলিট হয়েছে", "রেজাল্ট মুছে ফেলা হয়েছে", "success");
         fetchResults();
-      } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.error("Failed to delete result:", error);
-        Swal.fire("❌ সমস্যা হয়েছে", "ডিলিট করতে ব্যর্থ", "error");
+        if (error.response) {
+          Swal.fire(
+            "❌ সমস্যা হয়েছে",
+            error.response.data?.message || "ডিলিট করতে ব্যর্থ",
+            "error"
+          );
+        } else {
+          Swal.fire("❌ সমস্যা হয়েছে", "নেটওয়ার্ক ত্রুটি অথবা সার্ভার ডাউন।", "error");
+        }
       }
     }
   };

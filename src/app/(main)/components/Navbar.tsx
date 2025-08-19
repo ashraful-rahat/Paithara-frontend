@@ -12,7 +12,9 @@ const MENU_ITEMS = [
   { label: "শিক্ষক তালিকা", href: "/teachers" },
   { label: "ফলাফল", href: "/results" },
   { label: "ইভেন্টস", href: "/events" },
+
   { label: "যোগাযোগ", href: "/contact" },
+    { label: "লগইন", href: "/register" },
 ];
 
 export default function Navbar() {

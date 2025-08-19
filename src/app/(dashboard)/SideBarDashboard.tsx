@@ -136,12 +136,14 @@ const SideBarDashboard = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <School className="w-6 h-6 text-white" />
               </div>
-              {!isCollapsed && (
-                <div>
-                  <h1 className="text-lg font-bold text-gray-900">পৈথারা</h1>
-                  <p className="text-xs text-gray-500">উচ্চ বিদ্যালয়</p>
-                </div>
-              )}
+        {!isCollapsed && (
+  <Link href="/" className="block">
+    <div className="cursor-pointer">
+      <h1 className="text-lg font-bold text-gray-900">পৈথারা</h1>
+      <p className="text-xs text-gray-500">উচ্চ বিদ্যালয়</p>
+    </div>
+  </Link>
+)}
             </div>
             <button
               onClick={toggleSidebar}
