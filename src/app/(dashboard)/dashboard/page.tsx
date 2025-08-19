@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Users,
@@ -18,7 +18,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 interface DashboardStats {
   totalStudents: number;
   totalStaff: number;
@@ -34,6 +34,26 @@ const DashboardPage = () => {
     totalClasses: 5,
     recentActivities: 0,
   });
+
+  const router = useRouter();
+ 
+  const [loading, setLoading] = useState(true);
+
+
+
+ useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("userRole");
+
+    if (!token) {
+      router.push("/login"); // token নাই → login page
+    } else if (role !== "admin") {
+      router.push("/"); // normal user → home page
+    } else {
+      setLoading(false); // admin allowed
+    }
+  }, [router]);
+
 
 
 

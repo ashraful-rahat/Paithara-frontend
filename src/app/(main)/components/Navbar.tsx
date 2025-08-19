@@ -1,194 +1,162 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
-
-const MENU_ITEMS = [
-  { label: "হোম", href: "/" },
-  { label: "আমাদের সম্পর্কে", href: "/about" },
-  { label: "শ্রেণীকক্ষ", href: "/classroom" },
-  { label: "সকল শিক্ষার্থী", href: "/students" },
-  { label: "শিক্ষক তালিকা", href: "/teachers" },
-  { label: "ফলাফল", href: "/results" },
-  { label: "ইভেন্টস", href: "/events" },
-
-  { label: "যোগাযোগ", href: "/contact" },
-    { label: "লগইন", href: "/register" },
-];
+import { useState, useEffect } from "react";
+import { Menu, X, Phone, Mail, MapPin, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedRole = localStorage.getItem("userRole");
+    setToken(storedToken);
+    setUserRole(storedRole);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    setToken(null);
+    setUserRole(null);
+    router.push("/");
   };
 
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+
+  const MENU_ITEMS = [
+    { label: "হোম", href: "/" },
+    { label: "আমাদের সম্পর্কে", href: "/about" },
+    { label: "শ্রেণীকক্ষ", href: "/classroom" },
+    { label: "সকল শিক্ষার্থী", href: "/students" },
+    { label: "শিক্ষক তালিকা", href: "/teachers" },
+    { label: "ফলাফল", href: "/results" },
+    { label: "ইভেন্টস", href: "/events" },
+    { label: "যোগাযোগ", href: "/contact" },
+  ];
+
+  // Role-based links
+  if (userRole === "admin") {
+    MENU_ITEMS.push({ label: "ড্যাশবোর্ড", href: "/dashboard" });
+  } else if (userRole === "student") {
+    MENU_ITEMS.push({ label: "আবেদন", href: "/application" });
+  }
+
   return (
-    <nav className="w-full bg-gradient-to-r from-white to-gray-50 shadow-lg border-b-4 border-green-600">
-      {/* Bismillah at the very top */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-2">
-        <p className="text-lg font-bold tracking-wider">
-          বিসমিল্লাহির রাহমানির রাহিম
-        </p>
+    <nav className="w-full bg-gradient-to-r from-white to-gray-50 shadow-lg border-b-2 border-green-600">
+      {/* Bismillah at the top */}
+      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-1">
+        <p className="text-sm font-bold tracking-wider">বিসমিল্লাহির রাহমানির রাহিম</p>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Bar - Contact Info */}
-        <div className="hidden md:flex items-center justify-end py-3 text-sm text-gray-700 space-x-6">
-          <div className="flex items-center gap-2 bg-white/80 px-3 py-1 rounded-full shadow-sm">
-            <Mail size={18} className="text-green-600" />
-            <a
-              href="mailto:info@paithara.edu.bd"
-              className="hover:text-green-600 transition-colors font-medium"
-            >
-              paihsful106658@gmail.com
+        {/* Top Bar */}
+        <div className="hidden md:flex items-center justify-end py-2 text-xs text-gray-700 space-x-4">
+          <div className="flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-full shadow-sm">
+            <Mail size={16} className="text-green-600" />
+            <a href="mailto:info@paithara.edu.bd" className="hover:text-green-600 font-medium">
+              info@paithara.edu.bd
             </a>
           </div>
-          <div className="flex items-center gap-2 bg-white/80 px-3 py-1 rounded-full shadow-sm">
-            <Phone size={18} className="text-green-600" />
-            <a
-              href="tel:01300-000000"
-              className="hover:text-green-600 transition-colors font-medium"
-            >
+          <div className="flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-full shadow-sm">
+            <Phone size={16} className="text-green-600" />
+            <a href="tel:01300-000000" className="hover:text-green-600 font-medium">
               01816064879
             </a>
           </div>
-          <div className="flex items-center gap-2 bg-white/80 px-3 py-1 rounded-full shadow-sm">
-            <MapPin size={18} className="text-green-600" />
+          <div className="flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-full shadow-sm">
+            <MapPin size={16} className="text-green-600" />
             <span className="font-medium">পৈথারা, ফুলগাজী</span>
           </div>
         </div>
 
         {/* Main Navbar */}
-        <div className="flex items-center justify-between py-4">
-          {/* Logo and School Name */}
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Image
-                src="/images/logo1.png"
-                alt="পৈথারা উচ্চ বিদ্যালয় লোগো"
-                width={70}
-                height={70}
-                className="rounded-full object-cover border-4 border-green-600 shadow-lg"
-              />
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">✓</span>
-              </div>
-            </div>
+        <div className="flex items-center justify-between py-3">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/logo1.png"
+              alt="পৈথারা উচ্চ বিদ্যালয় লোগো"
+              width={60}
+              height={60}
+              className="rounded-full border-2 border-green-600 object-cover"
+            />
             <div className="hidden sm:block">
-              <h1 className="text-2xl font-bold text-gray-900 leading-tight">
-                পৈথারা উচ্চ বিদ্যালয়
-              </h1>
-              <p className="text-base text-gray-600 font-medium">
-                স্থাপিত: ১৯৮৫
-              </p>
-              <p className="text-sm text-green-600 font-semibold">
-                মাধ্যমিক শিক্ষা প্রতিষ্ঠান
-              </p>
+              <h1 className="text-xl font-bold text-gray-900">পৈথারা উচ্চ বিদ্যালয়</h1>
+              <p className="text-xs text-gray-600 font-medium">মাধ্যমিক শিক্ষা প্রতিষ্ঠান</p>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center space-x-4 text-sm">
             {MENU_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-gray-800 hover:text-green-600 font-semibold text-lg transition-all duration-300 relative group px-4 py-2 rounded-lg hover:bg-green-50"
+                className="px-3 py-1 hover:text-green-600 hover:bg-green-50 rounded transition-all font-medium"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-green-600 transition-all duration-300 group-hover:w-3/4"></span>
               </Link>
             ))}
-          </div>
-
-          {/* Tablet Navigation - Compact */}
-          <div className="hidden md:flex lg:hidden items-center space-x-4">
-            {MENU_ITEMS.slice(0, 3).map((item) => (
+            {token ? (
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1 px-3 py-1 bg-red-50 text-red-600 rounded hover:bg-red-100 transition-all font-medium"
+              >
+                লগআউট <LogOut size={16} />
+              </button>
+            ) : (
               <Link
-                key={item.href}
-                href={item.href}
-                className="text-gray-800 hover:text-green-600 font-semibold text-base transition-all duration-300 px-3 py-2 rounded-lg hover:bg-green-50"
+                href="/register"
+                className="px-3 py-1 bg-green-50 text-green-600 rounded hover:bg-green-100 transition-all font-medium"
               >
-                {item.label}
+                লগইন
               </Link>
-            ))}
-            <button
-              onClick={toggleMobileMenu}
-              className="p-2 rounded-lg text-gray-800 hover:text-green-600 hover:bg-green-50 transition-all duration-300"
-            >
-              <Menu size={24} />
-            </button>
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Nav Button */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden p-3 rounded-lg text-gray-800 hover:text-green-600 hover:bg-green-50 transition-all duration-300"
+            className="lg:hidden p-2 rounded text-gray-800 hover:text-green-600 hover:bg-green-50 transition"
           >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t-2 border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
-            <div className="py-3 space-y-1">
+          <div className="lg:hidden border-t border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
+            <div className="py-2 flex flex-col space-y-1 text-sm">
               {MENU_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-4 py-3 text-gray-800 hover:text-green-600 hover:bg-green-50 font-semibold text-lg transition-all duration-300 mx-2 rounded-lg"
+                  className="block px-3 py-2 rounded hover:bg-green-50 hover:text-green-600 transition-all font-medium"
                 >
                   {item.label}
                 </Link>
               ))}
-
-              {/* Mobile Contact Info */}
-              <div className="border-t-2 border-green-200 mt-4 pt-4 px-4 space-y-3">
-                <div className="flex items-center gap-3 text-base text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
-                  <Mail size={20} className="text-green-600" />
-                  <a
-                    href="mailto:info@paithara.edu.bd"
-                    className="hover:text-green-600 transition-colors font-medium"
-                  >
-                    info@paithara.edu.bd
-                  </a>
-                </div>
-                <div className="flex items-center gap-3 text-base text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
-                  <Phone size={20} className="text-green-600" />
-                  <a
-                    href="tel:01300-000000"
-                    className="hover:text-green-600 transition-colors font-medium"
-                  >
-                    01300-000000
-                  </a>
-                </div>
-                <div className="flex items-center gap-3 text-base text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
-                  <MapPin size={20} className="text-green-600" />
-                  <span className="font-medium">পৈথারা, ঢাকা</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Tablet Dropdown Menu */}
-        {isMobileMenuOpen && (
-          <div className="hidden md:block lg:hidden border-t-2 border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
-            <div className="py-3 space-y-1">
-              {MENU_ITEMS.slice(3).map((item) => (
+              {token ? (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-1 px-3 py-2 bg-red-50 text-red-600 rounded hover:bg-red-100 transition-all font-medium"
+                >
+                  লগআউট <LogOut size={16} />
+                </button>
+              ) : (
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-4 py-3 text-gray-800 hover:text-green-600 hover:bg-green-50 font-semibold text-lg transition-all duration-300 mx-2 rounded-lg"
+                  href="/register"
+                  className="block px-3 py-2 bg-green-50 text-green-600 rounded hover:bg-green-100 transition-all font-medium"
                 >
-                  {item.label}
+                  লগইন
                 </Link>
-              ))}
+              )}
             </div>
           </div>
         )}
