@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard,
-  Users,
-  GraduationCap,
-  UserPlus,
-  Settings,
-  Menu,
-  X,
-  LogOut,
   BarChart3,
+  BookOpen,
   FileText,
+  GraduationCap,
+  LayoutDashboard,
+  LogOut,
+  Menu,
   School,
   Search,
+  Settings,
+  UserPlus,
+  Users,
+  X,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const SideBarDashboard = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -60,19 +61,19 @@ const SideBarDashboard = () => {
     //   icon: School,
     //   current: pathname === "/dashboard/classes",
     // },
-    // {
-    //   name: "পরীক্ষা ব্যবস্থাপনা",
-    //   href: "/dashboard/exams",
-    //   icon: BookOpen,
-    //   current: pathname === "/dashboard/exams",
-    // },
+    {
+      name: "আবেদনসমূহ",
+      href: "/dashboard/applications",
+      icon: BookOpen,
+      current: pathname === "/dashboard/applications",
+    },
 
-{
-  name: "রেজাল্ট যোগ করুন",
-  href: "/dashboard/resultadd",
-  icon: BarChart3, // চাইলে অন্য আইকন দাও
-  current: pathname === "/dashboard/resultadd", // ঠিক path দাও (d ছোট)
-},
+    {
+      name: "রেজাল্ট যোগ করুন",
+      href: "/dashboard/resultadd",
+      icon: BarChart3, // চাইলে অন্য আইকন দাও
+      current: pathname === "/dashboard/resultadd", // ঠিক path দাও (d ছোট)
+    },
     {
       name: "নোটিশ",
       href: "/dashboard/notices",
@@ -136,14 +137,14 @@ const SideBarDashboard = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <School className="w-6 h-6 text-white" />
               </div>
-        {!isCollapsed && (
-  <Link href="/" className="block">
-    <div className="cursor-pointer">
-      <h1 className="text-lg font-bold text-gray-900">পৈথারা</h1>
-      <p className="text-xs text-gray-500">উচ্চ বিদ্যালয়</p>
-    </div>
-  </Link>
-)}
+              {!isCollapsed && (
+                <Link href="/" className="block">
+                  <div className="cursor-pointer">
+                    <h1 className="text-lg font-bold text-gray-900">পৈথারা</h1>
+                    <p className="text-xs text-gray-500">উচ্চ বিদ্যালয়</p>
+                  </div>
+                </Link>
+              )}
             </div>
             <button
               onClick={toggleSidebar}

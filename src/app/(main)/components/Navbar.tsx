@@ -142,7 +142,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
+          <div className=" text-gray-950 lg:hidden border-t border-green-200 bg-white/95 backdrop-blur-sm rounded-lg mt-2 shadow-xl">
             <div className="py-2 flex flex-col space-y-1 text-sm">
               {MENU_ITEMS.map((item) => (
                 <Link
