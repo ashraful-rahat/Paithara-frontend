@@ -1,9 +1,9 @@
 "use client";
-import Link from "next/link";
+import { LogOut, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { Menu, X, Phone, Mail, MapPin, LogOut } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -50,7 +50,9 @@ export default function Navbar() {
     <nav className="w-full bg-gradient-to-r from-white to-gray-50 shadow-lg border-b-2 border-green-600">
       {/* Bismillah at the top */}
       <div className="bg-gradient-to-r from-green-600 to-green-700 text-white text-center py-1">
-        <p className="text-sm font-bold tracking-wider">বিসমিল্লাহির রাহমানির রাহিম</p>
+        <p className="text-sm font-bold tracking-wider">
+          বিসমিল্লাহির রাহমানির রাহিম
+        </p>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,13 +60,19 @@ export default function Navbar() {
         <div className="hidden md:flex items-center justify-end py-2 text-xs text-gray-700 space-x-4">
           <div className="flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-full shadow-sm">
             <Mail size={16} className="text-green-600" />
-            <a href="mailto:info@paithara.edu.bd" className="hover:text-green-600 font-medium">
+            <a
+              href="mailto:info@paithara.edu.bd"
+              className="hover:text-green-600 font-medium"
+            >
               info@paithara.edu.bd
             </a>
           </div>
           <div className="flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-full shadow-sm">
             <Phone size={16} className="text-green-600" />
-            <a href="tel:01300-000000" className="hover:text-green-600 font-medium">
+            <a
+              href="tel:01300-000000"
+              className="hover:text-green-600 font-medium"
+            >
               01816064879
             </a>
           </div>
@@ -86,8 +94,12 @@ export default function Navbar() {
               className="rounded-full border-2 border-green-600 object-cover"
             />
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gray-900">পৈথারা উচ্চ বিদ্যালয়</h1>
-              <p className="text-xs text-gray-600 font-medium">মাধ্যমিক শিক্ষা প্রতিষ্ঠান</p>
+              <h1 className="text-xl font-bold text-gray-900">
+                পৈথারা উচ্চ বিদ্যালয়
+              </h1>
+              <p className="text-xs text-gray-600 font-medium">
+                মাধ্যমিক শিক্ষা প্রতিষ্ঠান
+              </p>
             </div>
           </div>
 
@@ -97,7 +109,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-1 hover:text-green-600 hover:bg-green-50 rounded transition-all font-medium"
+                className="px-3 py-1 text-gray-900 hover:text-green-600 hover:bg-green-50 rounded transition-all font-medium"
               >
                 {item.label}
               </Link>

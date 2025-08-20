@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
+import React, { useCallback, useEffect, useState } from "react";
 
 interface CarouselSlide {
   id: number;
@@ -19,7 +19,7 @@ interface BannerProps {
 
 const defaultSlides: CarouselSlide[] = [
   { id: 1, image: "/images/bannnnnnnner.jpg" },
-  { id: 2, image: "/images/banner2.jpg" },
+  { id: 2, image: "/images/gach.jpg" },
   { id: 3, image: "/images/banner.jpg" },
 ];
 
