@@ -55,12 +55,12 @@ const SideBarDashboard = () => {
       icon: UserPlus,
       current: pathname === "/dashboard/Staffadd",
     },
-    // {
-    //   name: "শ্রেণি ব্যবস্থাপনা",
-    //   href: "/dashboard/classes",
-    //   icon: School,
-    //   current: pathname === "/dashboard/classes",
-    // },
+   {
+  name: "ব্যক্তিগত ফলাফল",
+  href: "/dashboard/individualresult",
+  icon: BookOpen,
+  current: pathname === "/dashboard/individualresult",
+   },
     {
       name: "আবেদনসমূহ",
       href: "/dashboard/applications",
@@ -87,6 +87,8 @@ const SideBarDashboard = () => {
       current: pathname === "/dashboard/settings",
     },
   ];
+
+
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
