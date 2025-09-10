@@ -1,10 +1,10 @@
-import React from "react";
-import Notice from "./components/Notice";
-import Banner from "./components/Banner";
 import Academic from "./components/Academic";
-import StudentActivities from "./components/StudentActivities";
-import SirSpeech from "./components/SirSpeech";
+import Banner from "./components/Banner";
 import ClassroomPage from "./components/Classroom";
+import Gallery from "./components/Gallery";
+import Notice from "./components/Notice";
+import SirSpeech from "./components/SirSpeech";
+import StudentActivities from "./components/StudentActivities";
 
 const HomePage = () => {
   return (
@@ -14,6 +14,7 @@ const HomePage = () => {
       <SirSpeech></SirSpeech>
       <Academic />
       <ClassroomPage />
+      <Gallery></Gallery>
       <StudentActivities />
     </div>
   );

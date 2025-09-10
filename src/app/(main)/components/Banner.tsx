@@ -18,9 +18,9 @@ interface BannerProps {
 }
 
 const defaultSlides: CarouselSlide[] = [
-  { id: 1, image: "/images/bannnnnnnner.jpg" },
+  { id: 1, image: "/images/one.jpg" },
   { id: 2, image: "/images/gach.jpg" },
-  { id: 3, image: "/images/banner.jpg" },
+  { id: 3, image: "/images/banner2.jpg" },
 ];
 
 const Banner: React.FC<BannerProps> = ({

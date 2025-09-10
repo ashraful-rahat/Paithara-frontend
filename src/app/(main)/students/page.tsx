@@ -1,28 +1,26 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { toast } from "react-hot-toast";
-import Image from "next/image";
-import {
-  GraduationCap,
-  Search,
-  ArrowLeft,
-  Filter,
-  User,
-  Phone,
-  BookOpen,
-  Users,
-  Calendar,
-  Trophy,
-  Award,
-  Heart,
-  Eye,
-  TrendingUp,
-  BookOpenCheck
-} from "lucide-react";
-import Link from "next/link";
 import axiosInstance from "@/utils/axios";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Award,
+  BookOpen,
+  BookOpenCheck,
+  Eye,
+  Filter,
+  GraduationCap,
+  Phone,
+  Search,
+  TrendingUp,
+  Trophy,
+  User,
+  Users,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface Student {
   _id: string;
@@ -97,11 +95,17 @@ const StudentPage = () => {
   };
 
   const getGenderColor = (gender: string) => {
-    return gender === "পুরুষ" ? "from-blue-500 to-blue-600" : "from-pink-500 to-pink-600";
+    return gender === "পুরুষ"
+      ? "from-blue-500 to-blue-600"
+      : "from-pink-500 to-pink-600";
   };
 
   const getGenderIcon = (gender: string) => {
-    return gender === "পুরুষ" ? <User className="w-4 h-4" /> : <User className="w-4 h-4" />;
+    return gender === "পুরুষ" ? (
+      <User className="w-4 h-4" />
+    ) : (
+      <User className="w-4 h-4" />
+    );
   };
 
   if (loading) {
@@ -109,7 +113,9 @@ const StudentPage = () => {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-600">ছাত্র-ছাত্রী তথ্য লোড হচ্ছে...</p>
+          <p className="text-xl text-gray-600">
+            ছাত্র-ছাত্রী তথ্য লোড হচ্ছে...
+          </p>
         </div>
       </div>
     );
@@ -118,7 +124,7 @@ const StudentPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Hero Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -127,7 +133,7 @@ const StudentPage = () => {
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-black/10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.1)_1px,transparent_0)] bg-[length:20px_20px] opacity-20" />
-        
+
         <div className="relative max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ scale: 0.8 }}
@@ -137,8 +143,8 @@ const StudentPage = () => {
           >
             <GraduationCap className="w-10 h-10 text-white" />
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -146,14 +152,15 @@ const StudentPage = () => {
           >
             আমাদের ছাত্র-ছাত্রী
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
           >
-            ভবিষ্যতের নেতৃত্বদানকারী এবং দেশের সম্পদ হিসেবে গড়ে উঠছে আমাদের ছাত্র-ছাত্রীরা
+            ভবিষ্যতের নেতৃত্বদানকারী এবং দেশের সম্পদ হিসেবে গড়ে উঠছে আমাদের
+            ছাত্র-ছাত্রীরা
           </motion.p>
         </div>
       </motion.div>
@@ -186,7 +193,9 @@ const StudentPage = () => {
             <div className="text-right">
               <div className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl text-white">
                 <Users className="w-5 h-5" />
-                <span className="font-bold">মোট: {filteredStudents.length} জন</span>
+                <span className="font-bold">
+                  মোট: {filteredStudents.length} জন
+                </span>
               </div>
             </div>
           </div>
@@ -246,9 +255,14 @@ const StudentPage = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 কোনো ছাত্র-ছাত্রী পাওয়া যায়নি
               </h3>
-              <p className="text-gray-600 text-lg mb-6">অনুসন্ধানের শর্ত পরিবর্তন করুন।</p>
-              <button 
-                onClick={() => { setSearchTerm(""); setFilterClass(""); }}
+              <p className="text-gray-600 text-lg mb-6">
+                অনুসন্ধানের শর্ত পরিবর্তন করুন।
+              </p>
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setFilterClass("");
+                }}
                 className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 <Eye className="w-4 h-4" />
@@ -282,7 +296,7 @@ const StudentPage = () => {
                         <GraduationCap className="w-16 h-16 text-gray-400" />
                       </div>
                     )}
-                    
+
                     {/* Roll Badge */}
                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-white shadow-lg">
                       {student.roll}
@@ -295,10 +309,14 @@ const StudentPage = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
                     {student.name}
                   </h3>
-                  
+
                   {/* Class and Group */}
                   <div className="flex items-center justify-center space-x-2 mb-4">
-                    <div className={`inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r ${getClassColor(student.class)} rounded-full text-white text-sm font-medium`}>
+                    <div
+                      className={`inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r ${getClassColor(
+                        student.class
+                      )} rounded-full text-white text-sm font-medium`}
+                    >
                       {getClassIcon(student.class)}
                       <span>{student.class} শ্রেণি</span>
                     </div>
@@ -312,7 +330,11 @@ const StudentPage = () => {
 
                   {/* Gender Badge */}
                   <div className="flex items-center justify-center mb-4">
-                    <div className={`inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r ${getGenderColor(student.gender)} rounded-full text-white text-sm font-medium`}>
+                    <div
+                      className={`inline-flex items-center space-x-1 px-3 py-1 bg-gradient-to-r ${getGenderColor(
+                        student.gender
+                      )} rounded-full text-white text-sm font-medium`}
+                    >
                       {getGenderIcon(student.gender)}
                       <span>{student.gender}</span>
                     </div>
@@ -322,35 +344,20 @@ const StudentPage = () => {
                   <div className="space-y-3 text-left mb-6">
                     <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-blue-600 transition-colors duration-300">
                       <User className="w-4 h-4 text-blue-500" />
-                      <span className="truncate">পিতা: {student.fatherName}</span>
+                      <span className="truncate">
+                        পিতা: {student.fatherName}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-green-600 transition-colors duration-300">
                       <User className="w-4 h-4 text-green-500" />
-                      <span className="truncate">মাতা: {student.motherName}</span>
+                      <span className="truncate">
+                        মাতা: {student.motherName}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-purple-600 transition-colors duration-300">
                       <Phone className="w-4 h-4 text-purple-500" />
                       <span>অভিভাবক: {student.guardianNumber}</span>
                     </div>
-                    {student.dateOfBirth && (
-                      <div className="flex items-center space-x-3 text-sm text-gray-600 hover:text-orange-600 transition-colors duration-300">
-                        <Calendar className="w-4 h-4 text-orange-500" />
-                        <span>জন্ম: {student.dateOfBirth}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex items-center justify-center space-x-3 pt-6 border-t border-gray-100">
-                    <button className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-110 shadow-lg">
-                      <Eye className="w-4 h-4" />
-                    </button>
-                    <button className="p-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
-                      <Heart className="w-4 h-4" />
-                    </button>
-                    <button className="p-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
-                      <Phone className="w-4 h-4" />
-                    </button>
                   </div>
                 </div>
 
@@ -369,10 +376,14 @@ const StudentPage = () => {
           className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {classes.map((cls, index) => {
-            const classStudents = students.filter(s => s.class === cls);
-            const maleStudents = classStudents.filter(s => s.gender === "পুরুষ").length;
-            const femaleStudents = classStudents.filter(s => s.gender === "মহিলা").length;
-            
+            const classStudents = students.filter((s) => s.class === cls);
+            const maleStudents = classStudents.filter(
+              (s) => s.gender === "পুরুষ"
+            ).length;
+            const femaleStudents = classStudents.filter(
+              (s) => s.gender === "মহিলা"
+            ).length;
+
             return (
               <motion.div
                 key={cls}
@@ -381,11 +392,19 @@ const StudentPage = () => {
                 transition={{ delay: 0.9 + index * 0.1 }}
                 className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                <div className={`inline-flex p-3 bg-gradient-to-r ${getClassColor(cls)} rounded-2xl text-white mb-4`}>
+                <div
+                  className={`inline-flex p-3 bg-gradient-to-r ${getClassColor(
+                    cls
+                  )} rounded-2xl text-white mb-4`}
+                >
                   {getClassIcon(cls)}
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{cls} শ্রেণি</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-2">{classStudents.length} জন</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  {cls} শ্রেণি
+                </h3>
+                <div className="text-3xl font-bold text-blue-600 mb-2">
+                  {classStudents.length} জন
+                </div>
                 <div className="flex justify-center space-x-4 text-sm text-gray-600">
                   <span>ছেলে: {maleStudents}</span>
                   <span>মেয়ে: {femaleStudents}</span>
@@ -396,7 +415,6 @@ const StudentPage = () => {
         </motion.div>
 
         {/* Bottom CTA */}
-      
       </div>
     </div>
   );

@@ -1,78 +1,56 @@
 "use client";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Quote } from "lucide-react";
+import Image from "next/image";
 
-const speeches = [
-  {
-    name: "মোঃ নূরন নবী ভূঁইয়া",
-    designation: "ভারপ্রাপ্ত প্রধান শিক্ষক",
-    school: "পৈথারা উচ্চ বিদ্যালয়",
-    speech:
-      "আমাদের বিদ্যালয়ের মূল লক্ষ্য শিক্ষার্থীদের সুশিক্ষা প্রদান এবং নৈতিক ও সামাজিক মূল্যবোধ গঠন। প্রত্যেক শিক্ষার্থীর মাঝে আত্মবিশ্বাস ও দেশপ্রেম জাগ্রত করাই আমাদের অঙ্গীকার।",
-  },
-  {
-    name: "আবুর রহিম",
-    designation: "সহকারী শিক্ষক",
-    school: "পৈথারা উচ্চ বিদ্যালয়",
-    speech:
-      "শিক্ষা মানুষের মনন, চিন্তা ও কর্মে ইতিবাচক পরিবর্তন আনে। আমরা চেষ্টা করি শিক্ষার্থীদের মননশীল, সৃজনশীল ও দায়িত্বশীল নাগরিক হিসেবে গড়ে তুলতে।",
-  },
-  {
-    name: "মিজানুর রহমান",
-    designation: "সহকারী শিক্ষক",
-    school: "পৈথারা উচ্চ বিদ্যালয়",
-    speech:
-      "শিক্ষা শুধু বইয়ের মধ্যে সীমাবদ্ধ নয়, এটি জীবনের প্রতিটি ক্ষেত্রে প্রযোজ্য। শিক্ষার্থীরা যেন বাস্তব জীবনের চ্যালেঞ্জ মোকাবিলা করতে সক্ষম হয়, সেটাই আমাদের উদ্দেশ্য।",
-  },
-  {
-    name: "শিউলি রাণী চক্রবর্তী",
-    designation: "সহকারী শিক্ষক",
-    school: "পৈথারা উচ্চ বিদ্যালয়",
-    speech:
-      "শিক্ষার্থীদের মাঝে শৃঙ্খলা, সততা ও মানবিকতা বিকাশে আমরা কাজ করি। আমাদের বিদ্যালয় শিক্ষার্থীদের সর্বাঙ্গীণ উন্নয়নে প্রতিশ্রুতিবদ্ধ।",
-  },
-];
+const principalSpeech = {
+  name: "মোঃ নূরন নবী ভূঁইয়া",
+  designation: "প্রধান শিক্ষক",
+  school: "পৈথারা উচ্চ বিদ্যালয়",
+  speech:
+    "আমাদের বিদ্যালয়ের মূল লক্ষ্য শিক্ষার্থীদের সুশিক্ষা প্রদান এবং নৈতিক ও সামাজিক মূল্যবোধ গঠন। প্রত্যেক শিক্ষার্থীর মাঝে আত্মবিশ্বাস ও দেশপ্রেম জাগ্রত করাই আমাদের অঙ্গীকার। পাশাপাশি আমরা চেষ্টা করি প্রতিটি শিক্ষার্থীর মধ্যে সৃজনশীলতা, নেতৃত্বগুণ ও মানবিক চেতনা বিকাশ করতে। আধুনিক জ্ঞান, প্রযুক্তি ও চারিত্রিক উৎকর্ষতার সমন্বয়ে তাদেরকে আগামী দিনের আলোকিত নাগরিক হিসেবে গড়ে তোলাই আমাদের লক্ষ্য।",
+  image: "/images/two.jpg", // নিজের ইমেজ দিন
+};
 
 const SirSpeech = () => {
-  const [index, setIndex] = useState(0);
-
-  const prevSlide = () => {
-    setIndex((prev) => (prev === 0 ? speeches.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setIndex((prev) => (prev === speeches.length - 1 ? 0 : prev + 1));
-  };
-
-  const current = speeches[index];
-
   return (
-    <div className="bg-white py-10 px-4">
-      <h2 className="text-3xl font-bold  text-gray-900 text-center mb-8">
-        শিক্ষকদের বক্তব্য
-      </h2>
+    <div className="bg-white py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        {/* Section Title */}
+        <h2 className="text-4xl font-extrabold text-center mb-6 text-black">
+          প্রধান শিক্ষকের বক্তব্য
+        </h2>
+        <div className="w-24 h-1 bg-black mx-auto mb-12 rounded-full"></div>
 
-      <div className="max-w-4xl mx-auto relative border border-gray-200 rounded-xl shadow-lg bg-white p-8 transition-all duration-300">
-        {/* Navigation Buttons */}
-        <button
-          onClick={prevSlide}
-          className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow-md"
-        >
-          <ChevronLeft size={20} />
-        </button>
+        {/* Card */}
+        <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 flex flex-col md:flex-row items-center md:items-stretch">
+          {/* Image */}
+          <div className="md:w-2/5 w-full h-full relative">
+            <Image
+              src={principalSpeech.image}
+              alt={principalSpeech.name}
+              width={500}
+              height={500}
+              className="w-full h-full object-cover md:rounded-l-3xl"
+              priority
+            />
+            <div className="absolute bottom-4 right-4 bg-white p-3 rounded-full shadow-lg">
+              <Quote className="text-black" size={28} />
+            </div>
+          </div>
 
-        <button
-          onClick={nextSlide}
-          className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow-md"
-        >
-          <ChevronRight size={20} />
-        </button>
+          {/* Text Content */}
+          <div className="md:w-3/5 w-full p-10 flex flex-col justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+            <h3 className="text-2xl font-bold text-gray-900">
+              {principalSpeech.name}
+            </h3>
+            <p className="text-gray-600 mt-1">{principalSpeech.designation}</p>
+            <p className="text-gray-500 text-sm">{principalSpeech.school}</p>
 
-        {/* Speech Content */}
-        <h3 className="text-xl font-bold text-gray-900">{current.name}</h3>
-        <p className="text-gray-700">{current.designation}</p>
-        <p className="text-gray-700 mb-4">{current.school}</p>
-        <p className="text-gray-600 leading-relaxed">{current.speech}</p>
+            <p className="text-gray-800 text-lg leading-relaxed mt-6">
+              {principalSpeech.speech}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

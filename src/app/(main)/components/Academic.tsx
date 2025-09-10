@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import {
-  Beaker,
-  Briefcase,
-  BookOpen,
-  Sparkles,
+  ArrowRight,
+  Atom,
   GraduationCap,
+  HeartHandshake,
+  Sparkles,
+  TrendingUp,
 } from "lucide-react";
 
 const streams = [
@@ -15,31 +15,41 @@ const streams = [
     id: 1,
     title: "বিজ্ঞান শাখা",
     description:
-      "পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান, গণিত এবং কম্পিউটার সায়েন্স এর মতো বিষয় অন্তর্ভুক্ত। গবেষণা ও প্রযুক্তির ভবিষ্যৎ নেতাদের জন্য।",
-    icon: <Beaker className="icon-science" />,
+      "পদার্থবিজ্ঞান, রসায়ন, জীববিজ্ঞান , গণিত   এবং উচ্চতর গণিত  এর মতো বিষয় অন্তর্ভুক্ত। গবেষণা ও প্রযুক্তির ভবিষ্যৎ নেতাদের জন্য।",
+    icon: <Atom className="w-10 h-10" />,
     cardClass: "science-card",
-    subjects: ["পদার্থবিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "গণিত"],
+    subjects: ["পদার্থ বিজ্ঞান", "রসায়ন", "জীববিজ্ঞান", "উচ্চতর গণিত"],
     career: "ইঞ্জিনিয়ারিং, মেডিকেল, গবেষণা",
+    color: "from-blue-500 to-cyan-500",
+    bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50",
+    borderColor: "border-blue-200",
   },
   {
     id: 2,
     title: "ব্যবসায় শিক্ষা শাখা",
     description:
-      "হিসাববিজ্ঞান, ব্যবসায় অধ্যয়ন, অর্থনীতি এবং গণিত বিষয়গুলোর ওপর গুরুত্ব দেয়। ভবিষ্যৎ উদ্যোক্তা ও ব্যবসায়িক নেতাদের জন্য।",
-    icon: <Briefcase className="icon-business" />,
+      "হিসাববিজ্ঞান, ব্যবসায় পরিচিতি এবং ফিন্যান্স ও ব্যাংকিং বিষয়গুলোর ওপর গুরুত্ব দেওয়া হয়। ভবিষ্যতে উদ্যোক্তা, ব্যবসায়ী ও অর্থনীতি সেক্টরে চাকরির সুযোগ সন্ধানী নেতাদের জন্য।",
+    icon: <TrendingUp className="w-10 h-10" />,
     cardClass: "business-card",
-    subjects: ["হিসাববিজ্ঞান", "ব্যবসায় অধ্যয়ন", "অর্থনীতি", "গণিত"],
+    subjects: ["হিসাববিজ্ঞান", "ব্যবসায় পরিচিতি", "ফিন্যান্স ও ব্যাংকিং"],
     career: "ব্যাংকিং, ব্যবসা, অর্থনীতি",
+    color: "from-green-500 to-emerald-500",
+    bgColor: "bg-gradient-to-br from-green-50 to-emerald-50",
+    borderColor: "border-green-200",
   },
+
   {
     id: 3,
     title: "মানবিক শাখা",
     description:
-      "ইতিহাস, ভূগোল, রাজনৈতিক বিজ্ঞান, সাহিত্য এবং সমাজবিজ্ঞান এর মত বিষয় অন্তর্ভুক্ত। সমাজ ও সংস্কৃতির ভবিষ্যৎ কর্ণধারদের জন্য।",
-    icon: <BookOpen className="icon-humanities" />,
+      "ইতিহাস, ভূগোল, রাষ্ট্রবিজ্ঞান এবং সমাজবিজ্ঞান এর মত বিষয় অন্তর্ভুক্ত। সমাজ ও সংস্কৃতির ভবিষ্যতে কর্ণধারদের জন্য।",
+    icon: <HeartHandshake className="w-10 h-10" />,
     cardClass: "humanities-card",
-    subjects: ["ইতিহাস", "ভূগোল", "রাজনীতি", "সাহিত্য"],
+    subjects: ["ইতিহাস", "ভূগোল", "রাষ্ট্রবিজ্ঞান", "সমাজবিজ্ঞান"],
     career: "শিক্ষকতা, প্রশাসন, সাংবাদিকতা",
+    color: "from-amber-500 to-orange-500",
+    bgColor: "bg-gradient-to-br from-amber-50 to-orange-50",
+    borderColor: "border-amber-200",
   },
 ];
 
@@ -110,31 +120,34 @@ const subtitleVariants = {
 
 const AcademicPrograms = () => {
   return (
-    <div className="bg-white min-h-screen relative overflow-hidden floating-shapes">
+    <div className="min-h-screen relative overflow-hidden bg-white py-16">
       {/* Decorative Background Elements */}
-      <div className="absolute top-20 right-20 animate-float">
-        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 blur-xl"></div>
-      </div>
-      <div className="absolute bottom-40 left-20 animate-float-delayed">
-        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent/20 to-primary/20 blur-xl"></div>
-      </div>
+      <div className="absolute top-0 right-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
 
-      <div className="relative z-10 py-20 px-6 md:px-12 lg:px-20">
+      <div className="relative z-10 container mx-auto px-4">
         {/* Hero Section */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <motion.div
             variants={titleVariants}
             initial="hidden"
             animate="visible"
             className="mb-6"
           >
-            <h1 className="hero-title mb-4 text-gray-900 font-bold text-4xl md:text-5xl">
-              একাডেমিক প্রোগ্রামসমূহ
-            </h1>
-            <div className="flex items-center justify-center gap-2 text-2xl font-semibold text-gray-700">
-              <GraduationCap className="w-8 h-8" />
-              <span>শিক্ষার উৎকর্ষতা</span>
-              <Sparkles className="w-6 h-6 text-accent" />
+            <div className="inline-flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                <GraduationCap className="w-6 h-6 text-blue-600" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600">
+                একাডেমিক প্রোগ্রামসমূহ
+              </h1>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 text-xl font-semibold text-gray-700 mt-4">
+              <Sparkles className="w-6 h-6 text-amber-500" />
+              <span>শিক্ষার উৎকর্ষতা ও সমৃদ্ধি</span>
+              <Sparkles className="w-6 h-6 text-amber-500" />
             </div>
           </motion.div>
 
@@ -142,7 +155,7 @@ const AcademicPrograms = () => {
             variants={subtitleVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-4xl mx-auto text-lg md:text-xl text-gray-700 leading-relaxed"
+            className="max-w-4xl mx-auto text-lg md:text-xl text-gray-600 leading-relaxed mt-6"
           >
             আমাদের বিদ্যালয় শ্রেণি ৬ থেকে ১০ পর্যন্ত শিক্ষার্থীদের জন্য বিস্তৃত
             একাডেমিক প্রোগ্রাম সরবরাহ করে। শিক্ষার্থীরা তাদের আগ্রহ ও ক্যারিয়ার
@@ -153,7 +166,7 @@ const AcademicPrograms = () => {
 
         {/* Academic Streams Grid */}
         <motion.div
-          className="grid gap-8 lg:gap-12 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mb-20"
+          className="grid gap-8 lg:gap-10 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -161,100 +174,103 @@ const AcademicPrograms = () => {
           {streams.map((stream) => (
             <motion.div
               key={stream.id}
-              className={`academic-card ${stream.cardClass} group bg-white rounded-3xl shadow-lg p-8 cursor-pointer`}
+              className={`group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ${stream.bgColor} border ${stream.borderColor}`}
               variants={cardVariants}
               whileHover="hover"
               tabIndex={0}
             >
-              {/* Icon Container */}
-              <div className="mb-6 flex justify-center">
-                <div className="p-4 rounded-2xl dow-inner  text-black group-hover:scale-110 transition-transform duration-300">
-                  {stream.icon}
-                </div>
-              </div>
+              {/* Card Header with Gradient */}
+              <div className={`h-2 bg-gradient-to-r ${stream.color}`}></div>
 
-              {/* Content */}
-              <div className="text-center space-y-4">
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300">
-                  {stream.title}
-                </h2>
-
-                <p className="text-gray-700 leading-relaxed">
-                  {stream.description}
-                </p>
-
-                {/* Subject Tags */}
-                <div className="flex flex-wrap gap-2 justify-center pt-4">
-                  {stream.subjects.map((subject, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium text-gray-800 border border-gray-300"
-                    >
-                      {subject}
-                    </span>
-                  ))}
+              <div className="p-7">
+                {/* Icon Container */}
+                <div className="mb-6 flex justify-center">
+                  <div
+                    className={`p-4 rounded-2xl bg-gradient-to-br ${stream.color} text-white shadow-md group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    {stream.icon}
+                  </div>
                 </div>
 
-                {/* Career Path */}
-                <div className="pt-4 border-t border-gray-200">
-                  <p className="text-sm font-semibold text-gray-900 mb-1">
-                    ক্যারিয়ার সুযোগ:
+                {/* Content */}
+                <div className="text-center space-y-5">
+                  <h2
+                    className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${stream.color}`}
+                  >
+                    {stream.title}
+                  </h2>
+
+                  <p className="text-gray-600 leading-relaxed">
+                    {stream.description}
                   </p>
-                  <p className="text-sm text-gray-700">{stream.career}</p>
+
+                  {/* Subject Tags */}
+                  <div className="pt-4">
+                    <h3 className="text-sm font-semibold text-gray-800 mb-3">
+                      মুখ্য বিষয়সমূহ:
+                    </h3>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {stream.subjects.map((subject, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-800 border shadow-sm"
+                        >
+                          {subject}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Career Path */}
+                  <div className="pt-4 border-t border-gray-200">
+                    <h3 className="text-sm font-semibold text-gray-800 mb-2">
+                      ক্যারিয়ার সুযোগ:
+                    </h3>
+                    <p className="text-sm text-gray-700">{stream.career}</p>
+                  </div>
+
+                  {/* CTA Button */}
+                  <button
+                    className={`mt-4 w-full py-2.5 rounded-lg bg-gradient-to-r ${stream.color} text-white font-medium flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300`}
+                  >
+                    আরও জানুন
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Bottom Stats Section */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="bg-gray-50 rounded-3xl p-8 border border-gray-200 shadow-xl">
-            <div className="text-center mb-6">
-              <h3 className="section-title text-3xl mb-2 text-gray-900 font-semibold">
-                কেন আমাদের প্রোগ্রাম বেছে নিবেন?
-              </h3>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
-                  <GraduationCap className="w-6 h-6 text-blue-600" />
-                </div>
-                <h4 className="font-bold text-gray-900">অভিজ্ঞ শিক্ষকমণ্ডলী</h4>
-                <p className="text-sm text-gray-700">
-                  উচ্চ যোগ্যতাসম্পন্ন ও অভিজ্ঞ শিক্ষকদের দ্বারা পাঠদান
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                  <Users className="w-6 h-6 text-green-600" />
-                </div>
-                <h4 className="font-bold text-gray-900">ব্যক্তিগত মনোযোগ</h4>
-                <p className="text-sm text-gray-700">
-                  প্রতিটি শিক্ষার্থীর প্রতি বিশেষ যত্ন ও নির্দেশনা
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto bg-yellow-100 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-yellow-600" />
-                </div>
-                <h4 className="font-bold text-gray-900">আধুনিক সুবিধা</h4>
-                <p className="text-sm text-gray-700">
-                  উন্নত ল্যাব, লাইব্রেরি ও ডিজিটাল শিক্ষা ব্যবস্থা
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div> */}
+        {/* Additional Info Section */}
       </div>
+
+      {/* Animation Styles */}
+      <style jsx>{`
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     </div>
   );
 };

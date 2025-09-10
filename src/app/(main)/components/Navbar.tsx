@@ -64,7 +64,7 @@ export default function Navbar() {
               href="mailto:info@paithara.edu.bd"
               className="hover:text-green-600 font-medium"
             >
-              info@paithara.edu.bd
+              paisfull106658@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-1 bg-white/80 px-2 py-0.5 rounded-full shadow-sm">

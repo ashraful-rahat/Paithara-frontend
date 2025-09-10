@@ -1,21 +1,20 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import {
-  MapPin,
-  Phone,
-  Mail,
+  ArrowUp,
+  BookOpen,
+  Building,
   Clock,
   Facebook as FacebookIcon,
-  Twitter as TwitterIcon,
-  Instagram as InstagramIcon,
-  Youtube as YoutubeIcon,
-  BookOpen,
-  Users,
   Heart,
-  ArrowUp,
-  Building
+  Instagram as InstagramIcon,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter as TwitterIcon,
+  Users,
+  Youtube as YoutubeIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -29,37 +28,57 @@ const Footer = () => {
     { name: "শিক্ষকমণ্ডলী", href: "/teachers" },
     { name: "শিক্ষার্থী", href: "/students" },
     { name: "অনুষ্ঠান", href: "/events" },
-    { name: "যোগাযোগ", href: "/contact" }
+    { name: "যোগাযোগ", href: "/contact" },
   ];
 
   const contactInfo = [
     {
       icon: <MapPin className="w-5 h-5 text-blue-400" />,
       label: "ঠিকানা",
-      value: "পৈথারা উচ্চ বিদ্যালয়, ফুলগাজী, ফেনী, বাংলাদেশ"
+      value: "পৈথারা উচ্চ বিদ্যালয়, ফুলগাজী, ফেনী, বাংলাদেশ",
     },
     {
       icon: <Phone className="w-5 h-5 text-green-400" />,
       label: "ফোন",
-      value: "০১৭১১-২৩৪৫৬৭"
+      value: "01816064879",
     },
     {
       icon: <Mail className="w-5 h-5 text-red-400" />,
       label: "ইমেইল",
-      value: "info@paithara.edu.bd"
+      value: "paisfull106658@gmail.com",
     },
     {
       icon: <Clock className="w-5 h-5 text-yellow-400" />,
       label: "কর্মসময়",
-      value: "রবি-বৃহস্পতি: সকাল ৮:০০ - বিকাল ৪:০০"
-    }
+      value: "রবি-বৃহস্পতি: সকাল ৮:০০ - বিকাল ৪:০০",
+    },
   ];
 
   const socialLinks = [
-    { name: "Facebook", icon: <FacebookIcon className="w-5 h-5" />, href: "#", color: "hover:text-blue-600" },
-    { name: "Twitter", icon: <TwitterIcon className="w-5 h-5" />, href: "#", color: "hover:text-blue-400" },
-    { name: "Instagram", icon: <InstagramIcon className="w-5 h-5" />, href: "#", color: "hover:text-pink-600" },
-    { name: "YouTube", icon: <YoutubeIcon className="w-5 h-5" />, href: "#", color: "hover:text-red-600" }
+    {
+      name: "Facebook",
+      icon: <FacebookIcon className="w-5 h-5" />,
+      href: "#",
+      color: "hover:text-blue-600",
+    },
+    {
+      name: "Twitter",
+      icon: <TwitterIcon className="w-5 h-5" />,
+      href: "#",
+      color: "hover:text-blue-400",
+    },
+    {
+      name: "Instagram",
+      icon: <InstagramIcon className="w-5 h-5" />,
+      href: "#",
+      color: "hover:text-pink-600",
+    },
+    {
+      name: "YouTube",
+      icon: <YoutubeIcon className="w-5 h-5" />,
+      href: "#",
+      color: "hover:text-red-600",
+    },
   ];
 
   const scrollToTop = () => {
@@ -74,7 +93,6 @@ const Footer = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-12">
-
           {/* School Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -89,11 +107,12 @@ const Footer = () => {
               </div>
               <h3 className="text-2xl font-bold">পৈথারা উচ্চ বিদ্যালয়</h3>
             </div>
-            
+
             <p className="text-gray-300 leading-relaxed mb-6">
-              শিক্ষার আলোয় আলোকিত এক উজ্জ্বল ভবিষ্যৎ। ১৯৮৫ সাল থেকে মানসম্পন্ন শিক্ষা প্রদানে নিরলসভাবে কাজ করে আসছে।
+              শিক্ষার আলোয় আলোকিত এক উজ্জ্বল ভবিষ্যৎ। ১৯৮৫ সাল থেকে মানসম্পন্ন
+              শিক্ষা প্রদানে নিরলসভাবে কাজ করে আসছে।
             </p>
-            
+
             <div className="flex items-center space-x-4">
               {socialLinks.map((social, index) => (
                 <motion.a
@@ -130,7 +149,7 @@ const Footer = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 + index * 0.05 }}
                 >
-                  <Link 
+                  <Link
                     href={link.href}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center space-x-2 group"
                   >
@@ -175,7 +194,6 @@ const Footer = () => {
               ))}
             </div>
           </motion.div>
-
         </div>
       </div>
 
@@ -190,13 +208,30 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 text-gray-400 text-sm">
           <div className="flex items-center space-x-2">
             <Heart className="w-4 h-4 text-red-400" />
-            <span>© {currentYear} পৈথারা উচ্চ বিদ্যালয়। সর্বস্বত্ব সংরক্ষিত।</span>
+            <span>
+              © {currentYear} পৈথারা উচ্চ বিদ্যালয়। সর্বস্বত্ব সংরক্ষিত।
+            </span>
           </div>
 
           <div className="flex items-center space-x-6">
-            <Link href="/privacy" className="hover:text-blue-400 transition-colors duration-300">গোপনীয়তা নীতি</Link>
-            <Link href="/terms" className="hover:text-blue-400 transition-colors duration-300">ব্যবহারের শর্তাবলী</Link>
-            <Link href="/sitemap" className="hover:text-blue-400 transition-colors duration-300">সাইটম্যাপ</Link>
+            <Link
+              href="/privacy"
+              className="hover:text-blue-400 transition-colors duration-300"
+            >
+              গোপনীয়তা নীতি
+            </Link>
+            <Link
+              href="/terms"
+              className="hover:text-blue-400 transition-colors duration-300"
+            >
+              ব্যবহারের শর্তাবলী
+            </Link>
+            <Link
+              href="/sitemap"
+              className="hover:text-blue-400 transition-colors duration-300"
+            >
+              সাইটম্যাপ
+            </Link>
           </div>
         </div>
       </motion.div>
