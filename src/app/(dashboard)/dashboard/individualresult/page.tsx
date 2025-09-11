@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // ধরুন API থেকে students fetch করা হবে
 interface IStudent {
@@ -23,9 +23,7 @@ const IndividualResultForm = () => {
     year: new Date().getFullYear(),
     class: 6,
     group: "সাধারণ",
-    subjects: [
-      { subject: "", total: 0, grade: "", gpa: 0 },
-    ],
+    subjects: [{ subject: "", total: 0, grade: "", gpa: 0 }],
     totalMarks: 0,
     gpa: 0,
     grade: "",
@@ -42,13 +40,17 @@ const IndividualResultForm = () => {
     ]);
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubjectChange = (index: number, field: string, value: any) => {
     const updatedSubjects = [...formData.subjects];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (updatedSubjects as any)[index][field] = value;
     setFormData({ ...formData, subjects: updatedSubjects });
   };
@@ -56,7 +58,10 @@ const IndividualResultForm = () => {
   const addSubject = () => {
     setFormData({
       ...formData,
-      subjects: [...formData.subjects, { subject: "", total: 0, grade: "", gpa: 0 }],
+      subjects: [
+        ...formData.subjects,
+        { subject: "", total: 0, grade: "", gpa: 0 },
+      ],
     });
   };
 
@@ -66,13 +71,20 @@ const IndividualResultForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl space-y-4">
-      <h2 className="text-xl font-bold text-gray-800">📘 Individual Result Entry</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl space-y-4"
+    >
+      <h2 className="text-xl font-bold text-gray-800">
+        📘 Individual Result Entry
+      </h2>
 
       {/* Student select */}
       <select
         value={formData.studentId}
-        onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
+        onChange={(e) =>
+          setFormData({ ...formData, studentId: e.target.value })
+        }
         className="w-full p-2 border rounded"
         required
       >
@@ -85,7 +97,12 @@ const IndividualResultForm = () => {
       </select>
 
       {/* Exam Type */}
-      <select name="examType" value={formData.examType} onChange={handleChange} className="w-full p-2 border rounded">
+      <select
+        name="examType"
+        value={formData.examType}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      >
         <option value="অর্ধ-বার্ষিক">অর্ধ-বার্ষিক</option>
         <option value="বার্ষিক">বার্ষিক</option>
       </select>
@@ -100,7 +117,12 @@ const IndividualResultForm = () => {
       />
 
       {/* Class */}
-      <select name="class" value={formData.class} onChange={handleChange} className="w-full p-2 border rounded">
+      <select
+        name="class"
+        value={formData.class}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      >
         {[6, 7, 8, 9, 10].map((cls) => (
           <option key={cls} value={cls}>
             {cls} শ্রেণি
@@ -109,7 +131,12 @@ const IndividualResultForm = () => {
       </select>
 
       {/* Group */}
-      <select name="group" value={formData.group} onChange={handleChange} className="w-full p-2 border rounded">
+      <select
+        name="group"
+        value={formData.group}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      >
         <option value="সাধারণ">সাধারণ</option>
         <option value="বিজ্ঞান">বিজ্ঞান</option>
         <option value="মানবিক">মানবিক</option>
@@ -125,21 +152,27 @@ const IndividualResultForm = () => {
               type="text"
               placeholder="Subject"
               value={subj.subject}
-              onChange={(e) => handleSubjectChange(idx, "subject", e.target.value)}
+              onChange={(e) =>
+                handleSubjectChange(idx, "subject", e.target.value)
+              }
               className="p-2 border rounded col-span-1"
             />
             <input
               type="number"
               placeholder="Total Marks"
               value={subj.total}
-              onChange={(e) => handleSubjectChange(idx, "total", +e.target.value)}
+              onChange={(e) =>
+                handleSubjectChange(idx, "total", +e.target.value)
+              }
               className="p-2 border rounded col-span-1"
             />
             <input
               type="text"
               placeholder="Grade"
               value={subj.grade}
-              onChange={(e) => handleSubjectChange(idx, "grade", e.target.value)}
+              onChange={(e) =>
+                handleSubjectChange(idx, "grade", e.target.value)
+              }
               className="p-2 border rounded col-span-1"
             />
             <input
@@ -152,7 +185,11 @@ const IndividualResultForm = () => {
             />
           </div>
         ))}
-        <button type="button" onClick={addSubject} className="px-4 py-2 bg-blue-500 text-white rounded">
+        <button
+          type="button"
+          onClick={addSubject}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
           + Add Subject
         </button>
       </div>
@@ -195,7 +232,10 @@ const IndividualResultForm = () => {
       </div>
 
       {/* Submit */}
-      <button type="submit" className="w-full bg-green-600 text-white py-2 rounded">
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded"
+      >
         Save Result
       </button>
     </form>

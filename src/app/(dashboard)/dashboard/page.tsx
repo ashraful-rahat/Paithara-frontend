@@ -1,24 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Users,
-  GraduationCap,
+  AlertCircle,
+  ArrowRight,
   BookOpen,
   Calendar,
+  CheckCircle,
+  Clock,
+  Eye,
+  FileText,
+  GraduationCap,
+  Settings,
   TrendingUp,
   UserPlus,
-  FileText,
-  Settings,
-  ArrowRight,
-  Eye,
-  Clock,
-  CheckCircle,
-  AlertCircle,
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
 interface DashboardStats {
   totalStudents: number;
   totalStaff: number;
@@ -36,12 +37,10 @@ const DashboardPage = () => {
   });
 
   const router = useRouter();
- 
+
   const [loading, setLoading] = useState(true);
 
-
-
- useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("userRole");
 
@@ -54,37 +53,10 @@ const DashboardPage = () => {
     }
   }, [router]);
 
-
-
-
-  // useEffect(() => {
-  //   // Fetch dashboard stats
-  //   const fetchStats = async () => {
-  //     try {
-  //       const [studentsRes, staffRes] = await Promise.all([
-  //         fetch("/api/students"),
-  //         fetch("/api/staff"),
-  //       ]);
-
-  //       const students = await studentsRes.json();
-  //       const staff = await staffRes.json();
-
-  //       setStats({
-  //         totalStudents: students.data?.length || 0,
-  //         totalStaff: staff.data?.length || 0,
-  //         totalClasses: 5,
-  //         recentActivities:
-  //           (students.data?.length || 0) + (staff.data?.length || 0),
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching stats:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchStats();
-  // }, []);
+  // 🟢 এখানে loading use করা হলো
+  if (loading) {
+    return <div className="p-6 text-center text-gray-600">Loading...</div>;
+  }
 
   const statCards = [
     {
@@ -500,12 +472,6 @@ const DashboardPage = () => {
               <div className="flex items-center">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                 <span className="text-sm text-green-600">অনলাইন</span>
-              </div>
-            </div>
-            <div className="pt-2 border-t border-gray-200">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500">সর্বশেষ আপডেট</span>
-                <span className="text-gray-900">২ মিনিট আগে</span>
               </div>
             </div>
           </div>
