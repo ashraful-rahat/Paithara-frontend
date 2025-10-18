@@ -1,3 +1,6 @@
+// components/CircularGallery.tsx
+"use client";
+
 import {
   Camera,
   Mesh,
@@ -115,6 +118,8 @@ class Title {
       this.textColor
     );
     const geometry = new Plane(this.gl);
+
+    // OGL Program-এর সঠিক অপশন
     const program = new Program(this.gl, {
       vertex: `
         attribute vec3 position;
@@ -140,6 +145,7 @@ class Title {
       uniforms: { tMap: { value: texture } },
       transparent: true,
     });
+
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
     const textHeightScaled = this.plane.scale.y * 0.15;
@@ -246,6 +252,8 @@ class Media {
     const texture = new Texture(this.gl, {
       generateMipmaps: true,
     });
+
+    // OGL Program-এর সঠিক অপশন (blend প্রপার্টি ছাড়া)
     this.program = new Program(this.gl, {
       depthTest: false,
       depthWrite: false,
@@ -261,7 +269,8 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
+          // Enhanced bend effect with smoother animation
+          p.z = (sin(p.x * 3.0 + uTime) * 1.2 + cos(p.y * 1.8 + uTime) * 1.2) * (0.08 + uSpeed * 0.3);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -271,31 +280,51 @@ class Media {
         uniform vec2 uPlaneSizes;
         uniform sampler2D tMap;
         uniform float uBorderRadius;
+        uniform float uTime;
         varying vec2 vUv;
-        
-        float roundedBoxSDF(vec2 p, vec2 b, float r) {
-          vec2 d = abs(p) - b;
-          return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
+
+        // Improved rounded box SDF
+        float sdRoundedBox(vec2 p, vec2 b, float r) {
+          vec2 q = abs(p) - b + r;
+          return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
         }
-        
+
         void main() {
+          // Improved UV calculation for better image fitting
+          vec2 imageRatio = uImageSizes / max(uImageSizes.x, uImageSizes.y);
+          vec2 planeRatio = uPlaneSizes / max(uPlaneSizes.x, uPlaneSizes.y);
+          
           vec2 ratio = vec2(
-            min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
-            min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
+            min(planeRatio.x / imageRatio.x, 1.0),
+            min(planeRatio.y / imageRatio.y, 1.0)
           );
+          
           vec2 uv = vec2(
             vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
             vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
           );
+          
           vec4 color = texture2D(tMap, uv);
-          
-          float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
-          
-          // Smooth antialiasing for edges
-          float edgeSmooth = 0.002;
-          float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
-          
-          gl_FragColor = vec4(color.rgb, alpha);
+
+          // SDF calculation for rounded corners
+          vec2 p = vUv - 0.5;
+          vec2 boxSize = vec2(0.5, 0.5);
+          float border = uBorderRadius * min(boxSize.x, boxSize.y);
+
+          float d = sdRoundedBox(p, boxSize - border, border);
+
+          // Enhanced edge smoothing
+          float edgeSmoothness = 0.008;
+          float alpha = 1.0 - smoothstep(-edgeSmoothness, edgeSmoothness, d);
+
+          // Add subtle hover effect
+          float hoverEffect = sin(uTime * 2.0 + vUv.x * 3.14) * 0.1 + 0.9;
+          color.rgb *= hoverEffect;
+
+          // Discard fully transparent pixels
+          if (alpha < 0.01) discard;
+
+          gl_FragColor = vec4(color.rgb, color.a * alpha);
         }
       `,
       uniforms: {
@@ -308,6 +337,13 @@ class Media {
       },
       transparent: true,
     });
+
+    // Manual blending setup after program creation
+    const gl = this.gl;
+    this.program.gl.useProgram(this.program.program);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = this.image;
@@ -317,6 +353,12 @@ class Media {
         img.naturalWidth,
         img.naturalHeight,
       ];
+    };
+
+    img.onerror = () => {
+      console.warn(`Failed to load image: ${this.image}`);
+      // Fallback image
+      img.src = `https://picsum.photos/seed/${this.index + 1}/800/600`;
     };
   }
 
@@ -374,6 +416,7 @@ class Media {
     const viewportOffset = this.viewport.width / 2;
     this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
     this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
+
     if (direction === "right" && this.isBefore) {
       this.extra -= this.widthTotal;
       this.isBefore = this.isAfter = false;
@@ -391,23 +434,20 @@ class Media {
     if (screen) this.screen = screen;
     if (viewport) {
       this.viewport = viewport;
-      if (this.plane.program.uniforms.uViewportSizes) {
-        this.plane.program.uniforms.uViewportSizes.value = [
-          this.viewport.width,
-          this.viewport.height,
-        ];
-      }
     }
+
     this.scale = this.screen.height / 1500;
     this.plane.scale.y =
       (this.viewport.height * (900 * this.scale)) / this.screen.height;
     this.plane.scale.x =
       (this.viewport.width * (700 * this.scale)) / this.screen.width;
+
     this.plane.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    this.padding = 2;
+
+    this.padding = 1.5;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
@@ -463,9 +503,9 @@ class App {
       bend = 1,
       textColor = "#ffffff",
       borderRadius = 0,
-      font = "bold 30px Figtree",
-      scrollSpeed = 2,
-      scrollEase = 0.05,
+      font = "bold 24px Arial",
+      scrollSpeed = 1.5,
+      scrollEase = 0.03,
     }: AppConfig
   ) {
     document.documentElement.classList.remove("no-js");
@@ -497,7 +537,7 @@ class App {
   createCamera() {
     this.camera = new Camera(this.gl);
     this.camera.fov = 45;
-    this.camera.position.z = 20;
+    this.camera.position.z = 15;
   }
 
   createScene() {
@@ -506,8 +546,8 @@ class App {
 
   createGeometry() {
     this.planeGeometry = new Plane(this.gl, {
-      heightSegments: 50,
-      widthSegments: 100,
+      heightSegments: 30,
+      widthSegments: 50,
     });
   }
 
@@ -520,56 +560,30 @@ class App {
   ) {
     const defaultItems = [
       {
-        image: `https://picsum.photos/seed/1/800/600?grayscale`,
-        text: "Bridge",
+        image: `https://picsum.photos/seed/1/800/600`,
+        text: "স্কুল ভবন",
       },
       {
-        image: `https://picsum.photos/seed/2/800/600?grayscale`,
-        text: "Desk Setup",
+        image: `https://picsum.photos/seed/2/800/600`,
+        text: "ক্লাসরুম",
       },
       {
-        image: `https://picsum.photos/seed/3/800/600?grayscale`,
-        text: "Waterfall",
+        image: `https://picsum.photos/seed/3/800/600`,
+        text: "খেলার মাঠ",
       },
       {
-        image: `https://picsum.photos/seed/4/800/600?grayscale`,
-        text: "Strawberries",
+        image: `https://picsum.photos/seed/4/800/600`,
+        text: "লাইব্রেরি",
       },
       {
-        image: `https://picsum.photos/seed/5/800/600?grayscale`,
-        text: "Deep Diving",
-      },
-      {
-        image: `https://picsum.photos/seed/16/800/600?grayscale`,
-        text: "Train Track",
-      },
-      {
-        image: `https://picsum.photos/seed/17/800/600?grayscale`,
-        text: "Santorini",
-      },
-      {
-        image: `https://picsum.photos/seed/8/800/600?grayscale`,
-        text: "Blurry Lights",
-      },
-      {
-        image: `https://picsum.photos/seed/9/800/600?grayscale`,
-        text: "New York",
-      },
-      {
-        image: `https://picsum.photos/seed/10/800/600?grayscale`,
-        text: "Good Boy",
-      },
-      {
-        image: `https://picsum.photos/seed/21/800/600?grayscale`,
-        text: "Coastline",
-      },
-      {
-        image: `https://picsum.photos/seed/12/800/600?grayscale`,
-        text: "Palm Trees",
+        image: `https://picsum.photos/seed/5/800/600`,
+        text: "ল্যাবরেটরি",
       },
     ];
-    const galleryItems = items && items.length ? items : defaultItems;
-    this.mediasImages = galleryItems.concat(galleryItems);
+
+    const galleryItems = items && items.length > 0 ? items : defaultItems;
+    this.mediasImages = [...galleryItems, ...galleryItems];
+
     this.medias = this.mediasImages.map((data, index) => {
       return new Media({
         geometry: this.planeGeometry,
@@ -599,7 +613,7 @@ class App {
   onTouchMove(e: MouseEvent | TouchEvent) {
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const distance = (this.start - x) * (this.scrollSpeed * 0.025);
+    const distance = (this.start - x) * (this.scrollSpeed * 0.02);
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
 
@@ -610,6 +624,7 @@ class App {
 
   onWheel(e: Event) {
     const wheelEvent = e as WheelEvent;
+
     const delta =
       wheelEvent.deltaY ||
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -617,7 +632,7 @@ class App {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (wheelEvent as any).detail;
     this.scroll.target +=
-      (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+      (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.15;
     this.onCheckDebounce();
   }
 
@@ -638,10 +653,12 @@ class App {
     this.camera.perspective({
       aspect: this.screen.width / this.screen.height,
     });
+
     const fov = (this.camera.fov * Math.PI) / 180;
     const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
     const width = height * this.camera.aspect;
     this.viewport = { width, height };
+
     if (this.medias) {
       this.medias.forEach((media) =>
         media.onResize({ screen: this.screen, viewport: this.viewport })
@@ -655,10 +672,13 @@ class App {
       this.scroll.target,
       this.scroll.ease
     );
+
     const direction = this.scroll.current > this.scroll.last ? "right" : "left";
+
     if (this.medias) {
       this.medias.forEach((media) => media.update(this.scroll, direction));
     }
+
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
     this.raf = window.requestAnimationFrame(this.update.bind(this));
@@ -670,8 +690,8 @@ class App {
     this.boundOnTouchDown = this.onTouchDown.bind(this);
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
+
     window.addEventListener("resize", this.boundOnResize);
-    window.addEventListener("mousewheel", this.boundOnWheel);
     window.addEventListener("wheel", this.boundOnWheel);
     window.addEventListener("mousedown", this.boundOnTouchDown);
     window.addEventListener("mousemove", this.boundOnTouchMove);
@@ -684,7 +704,6 @@ class App {
   destroy() {
     window.cancelAnimationFrame(this.raf);
     window.removeEventListener("resize", this.boundOnResize);
-    window.removeEventListener("mousewheel", this.boundOnWheel);
     window.removeEventListener("wheel", this.boundOnWheel);
     window.removeEventListener("mousedown", this.boundOnTouchDown);
     window.removeEventListener("mousemove", this.boundOnTouchMove);
@@ -692,11 +711,8 @@ class App {
     window.removeEventListener("touchstart", this.boundOnTouchDown);
     window.removeEventListener("touchmove", this.boundOnTouchMove);
     window.removeEventListener("touchend", this.boundOnTouchUp);
-    if (
-      this.renderer &&
-      this.renderer.gl &&
-      this.renderer.gl.canvas.parentNode
-    ) {
+
+    if (this.renderer?.gl?.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(
         this.renderer.gl.canvas as HTMLCanvasElement
       );
@@ -716,16 +732,18 @@ interface CircularGalleryProps {
 
 export default function CircularGallery({
   items,
-  bend = 3,
-  textColor = "#ffffff",
-  borderRadius = 0.05,
-  font = "bold 30px Figtree",
-  scrollSpeed = 2,
-  scrollEase = 0.05,
+  bend = 2.5,
+  textColor = "#1f2937",
+  borderRadius = 0.06,
+  font = "bold 20px Arial",
+  scrollSpeed = 1.5,
+  scrollEase = 0.03,
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!containerRef.current) return;
+
     const app = new App(containerRef.current, {
       items,
       bend,
@@ -735,13 +753,15 @@ export default function CircularGallery({
       scrollSpeed,
       scrollEase,
     });
+
     return () => {
       app.destroy();
     };
   }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+
   return (
     <div
-      className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing"
+      className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg"
       ref={containerRef}
     />
   );
